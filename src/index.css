@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.non-interactive {
+  user-select: none;
+  cursor: default;
+}
+
+.interactive input, .interactive button, .interactive a {
+  user-select: text;
+  pointer-events: auto;
+}
+

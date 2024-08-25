@@ -1,0 +1,42 @@
+[
+  {
+    "NoRuas": 1,
+    "GUID": "a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",
+    "NamaRuasJalan": "Jalan Raya Garut - Bandung",
+    "Ruas": "15 Km",
+    "KecamatanYangDilalui": ["Tarogong Kidul", "Cibatu", "Kadungora"],
+    "Keterangan": "Jalan penghubung utama antara kota Garut dan Bandung, sering mengalami kemacetan pada jam sibuk."
+  },
+  {
+    "NoRuas": 2,
+    "GUID": "p6o5n4m3-l2k1-j0i9-h8g7-f6e5d4c3b2a1",
+    "NamaRuasJalan": "Jalan Lintas Selatan",
+    "Ruas": "25 Km",
+    "KecamatanYangDilalui": ["Pameungpeuk", "Cikelet", "Cibalong"],
+    "Keterangan": "Jalur alternatif untuk transportasi barang dari wilayah selatan menuju kota Garut."
+  },
+  {
+    "NoRuas": 3,
+    "GUID": "123e4567-e89b-12d3-a456-426614174000",
+    "NamaRuasJalan": "Jalan Ciledug Raya",
+    "Ruas": "8 Km",
+    "KecamatanYangDilalui": ["Garut Kota", "Cipanas"],
+    "Keterangan": "Sering terjadi banjir saat musim hujan, perlu perbaikan drainase."
+  },
+  {
+    "NoRuas": 4,
+    "GUID": "789e4567-e89b-12d3-a456-426614174001",
+    "NamaRuasJalan": "Jalan Sumedang - Wado",
+    "Ruas": "20 Km",
+    "KecamatanYangDilalui": ["Sumedang Utara", "Wado"],
+    "Keterangan": "Ruas jalan dengan pemandangan pegunungan, rawan longsor saat musim hujan."
+  },
+  {
+    "NoRuas": 5,
+    "GUID": "456e1237-e89b-12d3-a456-426614174002",
+    "NamaRuasJalan": "Jalan Raya Cikampek",
+    "Ruas": "30 Km",
+    "KecamatanYangDilalui": ["Cikampek", "Purwakarta", "Karawang"],
+    "Keterangan": "Jalur utama industri dengan akses ke pelabuhan, sering mengalami perbaikan jalan."
+  }
+]
