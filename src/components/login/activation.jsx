@@ -41,7 +41,7 @@ const Activation = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-96">
+    <form onSubmit={handleSubmit} className="max-w-96 flex flex-col">
       <p className="mb-2">Monja telah mengirim kode OTP ke email Anda</p>
       <p>
         Email:

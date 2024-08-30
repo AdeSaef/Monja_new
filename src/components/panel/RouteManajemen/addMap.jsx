@@ -1,64 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Atur ikon default
-L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
+const LeafletMap = ({ onAddPosition }) => {
+  const [positions, setPositions] = useState([]); // Menyimpan koordinat pin
 
-const LeafletMap = () => {
-  const [positions, setPositions] = useState([]);
-  const [map, setMap] = useState(null);
-
+  // Fungsi untuk menambahkan pin
   const addMarker = (e) => {
-    const newPositions = [...positions, e.latlng];
-    if (newPositions.length > 2) newPositions.shift();
-    setPositions(newPositions);
+    const { lat, lng } = e.latlng; // Ambil koordinat dari event klik
+    const newPosition = [lat, lng]; // Bentuk array koordinat [lat, lng]
+    const newPositions = [...positions, newPosition]; // Tambahkan pin baru ke dalam array
+    setPositions(newPositions); // Update state dengan array baru
+    onAddPosition(newPosition); // Mengirim koordinat baru ke komponen induk
   };
 
   const MapClickHandler = () => {
     useMapEvents({
-      click: addMarker,
+      click: addMarker, // Memanggil addMarker saat peta diklik
     });
     return null;
   };
 
-  useEffect(() => {
-    if (map && positions.length === 2) {
-      // Buat kontrol routing
-      const routingControl = L.Routing.control({
-        waypoints: positions.map((pos) => L.latLng(pos.lat, pos.lng)),
-        routeWhileDragging: true,
-        createMarker: () => null,
-      }).addTo(map);
-
-      return () => {
-        // Hapus kontrol routing saat komponen di-unmount atau dependensi berubah
-        map.removeControl(routingControl);
-      };
-    }
-  }, [map, positions]);
-
   return (
     <MapContainer
-      center={[-6.1751, 106.865]} // Contoh: koordinat Jakarta
+      center={[-7.2147, 107.8997]} // Contoh: koordinat Garut
       zoom={17}
       style={{ height: "500px", width: "100%" }}
-      whenCreated={setMap}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {positions.map((pos, index) => (
-        <Marker key={index} position={pos}></Marker>
+        <Marker key={index} position={pos}></Marker> // Menampilkan semua pin
       ))}
       <MapClickHandler />
     </MapContainer>

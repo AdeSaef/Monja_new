@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getKoordinatReport } from "./ruteService";
 
 export const useHomePageLogic = () => {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ export const useHomePageLogic = () => {
   const [ismapsOpen, setmapsOpen] = useState(false);
   const [isrouteOpen, setrouteOpen] = useState(true);
   const [issurveyOpen, setsurveyOpen] = useState(true);
-  const [InputData, setInput] = useState({ rute: "", tgl: "" });
+  const [InputData, setData] = useState({});
+  const [koordinatSelected, setKoordinat] = useState([]);
 
   const surveyMenu = () => {
     setIsRotated(!isRotated);
@@ -63,10 +65,29 @@ export const useHomePageLogic = () => {
     setrouteOpen(true);
   };
 
-  const ambilInput = (data) => {
-    setInput(data);
-    console.log(InputData);
+  const ambilKordinat = async (rute, tgl) => {
+    try {
+      // Memanggil API atau service untuk mendapatkan data koordinat
+      const fetchkoordinat = await getKoordinatReport("3ec16c53-e88a-46cc-b5cb-05389ee1a2786fsfgf", tgl);
+      console.log("fetch", fetchkoordinat);
+  
+      // Ambil semua koordinat dari respons dan simpan dalam state
+      const allKoordinat = fetchkoordinat.map((item) => item.coordinate);
+      console.log("Semua koordinat:", allKoordinat);
+  
+      // Set state koordinatSelected dengan array koordinat yang diperoleh
+      setKoordinat(allKoordinat);
+      console.log("Koordinat selected setelah update:", allKoordinat);
+    } catch (error) {
+      console.log("Error fetching koordinat:", error);
+    }
   };
+  
+  const ambilInput = (rute, date) => {
+    ambilKordinat(rute,date);
+  };
+
+
 
   return {
     isRotated,
@@ -79,6 +100,7 @@ export const useHomePageLogic = () => {
     isrouteOpen,
     issurveyOpen,
     InputData,
+    koordinatSelected,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,

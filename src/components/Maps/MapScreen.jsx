@@ -1,16 +1,32 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
-import { routes } from "../panel/MapsKonten/dataRoute";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap } from "react-leaflet";
 
-const MapScreen = ({ hide, data }) => {
+const UpdateMapView = ({ center, zoom }) => {
+  const map = useMap(); // Dapatkan referensi ke instance peta
+  useEffect(() => {
+    if (center && zoom) {
+      map.setView(center, zoom); // Atur pusat dan zoom peta
+    }
+  }, [center, zoom, map]);
+  return null;
+};
 
-  // Temukan rute untuk "Garut Kota"
-  const garutRoute = routes.find(route => route.name === "Garut Kota");
+const MapScreen = ({ hide, koordinat }) => {
+  // Menentukan koordinat pusat default jika tidak ada koordinat yang diberikan
+  const defaultCenter = [-2.5, 118.0];
+  const defaultZoom = 5;
 
-  // Jika rute ditemukan, ambil koordinat yang sesuai dengan tanggal yang dipilih
-  const garutCoordinates = garutRoute
-    ? garutRoute.coordinates.filter(coord => coord.date === "2024-05-21")
-    : [];
+  // Menghitung koordinat tengah dari array
+  const getMiddleCoordinate = () => {
+    if (koordinat.length === 0) {
+      return defaultCenter; // Menggunakan default jika tidak ada koordinat
+    }
+    const middleIndex = Math.floor(koordinat.length / 2); // Ambil elemen tengah
+    return koordinat[middleIndex];
+  };
+
+  const initialCenter = getMiddleCoordinate(); // Mengatur pusat ke koordinat tengah
+  const initialZoom = koordinat.length > 0 ? 18 : defaultZoom;
 
   return (
     <div
@@ -19,21 +35,22 @@ const MapScreen = ({ hide, data }) => {
     >
       <div style={{ height: "100vh", width: "100vw" }}>
         <MapContainer
-          center={[-6.928, 107.633]}
-          zoom={16}
+          center={initialCenter}
+          zoom={initialZoom}
           style={{ height: "100%", width: "100%" }}
           zoomControl={false}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          {garutCoordinates.map((coord, index) => (
-            <Marker key={index} position={[coord.lat, coord.lon]}>
+          {/* Komponen untuk memperbarui tampilan peta ketika koordinat berubah */}
+          <UpdateMapView center={initialCenter} zoom={initialZoom} />
+          {koordinat.map((coord, index) => (
+            <Marker key={index} position={coord}>
               <Popup>
                 <div>
-                  <strong>Date:</strong> {coord.date}<br />
-                  <strong>Time:</strong> {coord.time}
+                  <strong>Latitude:</strong> {coord[0]}<br />
+                  <strong>Longitude:</strong> {coord[1]}
                 </div>
               </Popup>
             </Marker>

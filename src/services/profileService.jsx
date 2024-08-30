@@ -9,8 +9,6 @@ const config = userToken
 export const getProfile = async () => {
   try {
     const response = await userApi.get("/users/profile", config);
-    console.log(response);
-    console.log(response.data.success);
 
     if (response.data.success) {
       return response.data.data;

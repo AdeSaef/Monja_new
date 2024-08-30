@@ -24,6 +24,7 @@ const HomePage = () => {
     isrouteOpen,
     issurveyOpen,
     InputData,
+    koordinatSelected,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,
@@ -34,6 +35,15 @@ const HomePage = () => {
     surveyOpen,
     ambilInput,
   } = useHomePageLogic();
+  const [koordinat, setKoordinat] = useState([]);
+
+  useEffect(() => {
+    console.log("selected homepage :", koordinatSelected);
+  }, [koordinatSelected]);
+
+  useEffect(() => {
+    setKoordinat(koordinatSelected);
+  }, [koordinatSelected]);
 
   const [imgprofile, setProfile] = useState(null);
   const [profile, setProfileData] = useState({});
@@ -59,7 +69,8 @@ const HomePage = () => {
 
   return (
     <div>
-      <MapScreen hide={hide} data={InputData} />
+      <MapScreen hide={hide} koordinat={koordinat} />
+
       <ProfileIcon
         isProfile={isProfile}
         toggleEditProfile={toggleEditProfile}

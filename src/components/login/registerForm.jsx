@@ -49,7 +49,6 @@ function FormRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (formData.password !== confirmPassword) {
       alert("Password dan konfirmasi password tidak sesuai!");
       return;

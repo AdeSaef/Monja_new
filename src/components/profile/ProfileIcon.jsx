@@ -50,7 +50,7 @@ const ProfileIcon = ({
         isProfile ? "opacity-100" : "opacity-0"
       }`}
     >
-      <div className="w-24 h-24 p-0 rounded-full border-2 border-black overflow-hidden select-none">
+      <div className="w-24 h-24 p-0 rounded-full border-4 border-black overflow-hidden select-none">
         <img
           src={imageProfile}
           alt="Profile"

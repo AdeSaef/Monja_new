@@ -16,7 +16,7 @@ function FormLogin() {
     password : password,
     guidAplication : `${guidAplication}`
   }
-  console.log(loginData)
+  // console.log(loginData)
   const navigate = useNavigate();
   const gotoForgotPassword =() =>{
     navigate("/forgot-password")
@@ -78,7 +78,7 @@ function FormLogin() {
           Lupa Password?
         </button>
       </div>
-      <Button textBtn="Masuk" />
+      <Button textBtn="Masuk"/>
     </form>
   );
 }

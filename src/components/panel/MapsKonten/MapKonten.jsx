@@ -1,29 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
-import { routes } from "./dataRoute";
+import Fuse from "fuse.js";
+import { getRuteName } from "../../../services/ruteService";
 
 const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
+  const [selectedRute, setGuidRute] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [ruteName, setRuteName] = useState([]);
+  const [filteredRoutes, setFilteredRoutes] = useState([]);
+  const [inputData, setInputData] = useState({ rute: "", date: "" });
 
-  const handleRouteChange = (route) => {
+  const handleRouteChange = (route, guid) => {
     setSelected(route);
     setOpen(false);
     setInputValue("");
+    setGuidRute(guid);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    ambilInput({ selected, selectedDate});
+    ambilInput(selectedRute, selectedDate);
+    setInputData({ rute: selectedRute, date: selectedDate });
+    console.log({ rute: selectedRute, date: selectedDate });
   };
 
+  const fetchRute = async () => {
+    try {
+      const survey = await getRuteName();
+      const ruteData = survey.data;
+      setRuteName(ruteData);
+      setFilteredRoutes(ruteData);
+      initializeFuse(ruteData);
+    } catch (error) {
+      console.error("Error fetching survey data:", error);
+    }
+  };
+
+  const initializeFuse = (data) => {
+    const fuse = new Fuse(data, {
+      keys: ['NAMA_RUAS_JALAN'],
+      threshold: 0.4,
+    });
+    setFilteredRoutes(fuse.search(inputValue).map(result => result.item));
+  };
+
+  useEffect(() => {
+    fetchRute();
+  }, []);
+
+  useEffect(() => {
+    if (inputValue === "") {
+      // Jika input kosong, tampilkan semua rute
+      setFilteredRoutes(ruteName);
+    } else {
+      initializeFuse(ruteName);
+    }
+  }, [inputValue, ruteName]);
+
   return (
-    <div className={`${ismapsOpen? "hidden":""}`}>
+    <div className={`${ismapsOpen ? "hidden" : ""}`}>
       <div
-        id="konten"
         className={`bg-white rounded-b-lg h-auto transition-all p-2 duration-500 transform ${
           isHidden ? "opacity-0 h-0 pointer-events-none" : "opacity-100 h-96"
         } select-none`}
@@ -58,31 +98,24 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
                   <input
                     type="text"
                     value={inputValue}
-                    onChange={(e) =>
-                      setInputValue(e.target.value.toLowerCase())
-                    }
+                    onChange={(e) => {
+                      setInputValue(e.target.value);
+                    }}
                     placeholder="Enter route name"
                     className="placeholder:text-gray-700 p-2 outline-none focus:border-black focus:ring-black"
                   />
                 </div>
-                {routes
-                  .filter((route) =>
-                    route.name.toLowerCase().startsWith(inputValue)
-                  )
+                {filteredRoutes
                   .map((route) => (
                     <li
-                      key={route.name}
+                      key={route.NAMA_RUAS_JALAN}
                       className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${
-                        route.name.toLowerCase() === selected.toLowerCase() &&
-                        "bg-sky-600 text-white"
-                      } ${
-                        route.name.toLowerCase().startsWith(inputValue)
-                          ? "block"
-                          : "hidden"
+                        route.NAMA_RUAS_JALAN.toLowerCase() ===
+                          selected.toLowerCase() && "bg-sky-600 text-white"
                       }`}
-                      onClick={() => handleRouteChange(route.name)}
+                      onClick={() => handleRouteChange(route.NAMA_RUAS_JALAN, route.GUID)}
                     >
-                      {route.name}
+                      {route.NAMA_RUAS_JALAN}
                     </li>
                   ))}
               </ul>

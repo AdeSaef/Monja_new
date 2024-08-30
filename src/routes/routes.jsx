@@ -11,7 +11,7 @@ import NewPassword from "../components/login/new_password.jsx";
 import ForgotPassword from "../components/login/forgotPassword.jsx";
 import ManajemenSurvey from "../components/panel/SurveyManajemen/manajemenSurvey.jsx";
 import ManajemenRoute from "../components/panel/RouteManajemen/manajemenRoute.jsx";
-import App from "./street";
+
 
 
 const AppRoutes = () => {
@@ -26,7 +26,6 @@ const AppRoutes = () => {
         <Route path="/berhasil" element={<AuthPage mode={<Berhasil />} lsize="m-3 my-0 w-12 sm:w-10 md:w-12 lg:w-16" ssize="h-[calc(100vh-5rem)] my-10 px-0"/>} /> 
         <Route path="/survey" element={< ManajemenSurvey />} />
         <Route path="/route" element={< ManajemenRoute />} />
-        <Route path="/test" element={< App />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>
