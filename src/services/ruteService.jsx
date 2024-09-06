@@ -1,4 +1,4 @@
-import { serverApi, lokalApi } from "../api/axios";
+import { userApi, lokalApi } from "../api/axios";
 
 
 export const getRuteData = async (page) => { 
@@ -72,7 +72,7 @@ export const getRutebyId =async (ID)=>{
 }
 export const getKoordinatReport =async (rute,tgl)=>{ 
     try{
-    const rutekoordinat = await lokalApi.get(`final-report/get/kordinate/?guid_rute=3ec16c53-e88a-46cc-b5cb-05389ee1a2786fsfgf&tanggal_survey=${tgl}`)
+    const rutekoordinat = await lokalApi.get(`final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`)
     console.log(rutekoordinat)
     if  (rutekoordinat.data.success) { 
         console.log(rutekoordinat.data.data);

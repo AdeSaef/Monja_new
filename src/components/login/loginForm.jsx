@@ -16,7 +16,6 @@ function FormLogin() {
     password : password,
     guidAplication : `${guidAplication}`
   }
-  // console.log(loginData)
   const navigate = useNavigate();
   const gotoForgotPassword =() =>{
     navigate("/forgot-password")
@@ -33,7 +32,7 @@ function FormLogin() {
         alert(response.data.message);
         
         const userToken = response.data.data.userToken;
-        const appToken = response.data.data.userToken;
+        const appToken = response.data.data.appToken;
         localStorage.setItem('userToken', userToken); 
         localStorage.setItem('appToken', appToken); 
         navigate("/");

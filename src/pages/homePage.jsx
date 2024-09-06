@@ -4,6 +4,7 @@ import MapScreen from "../components/Maps/MapScreen";
 import ProfileIcon from "../components/profile/ProfileIcon";
 import SettingScreen from "../components/profile/SettingScreen";
 import EditProfile from "../components/profile/EditProf";
+import DetailProfile from "../components/profile/detailProfile";
 import Panel from "../components/panel/PanelBtn";
 import MapsKonten from "../components/panel/MapsKonten/MapKonten";
 import SurveyBtn from "../components/panel/surveyBtn";
@@ -11,6 +12,8 @@ import { useHomePageLogic } from "../services/homepage";
 import { getProfile } from "../services/profileService";
 import { Validation } from "../services/verifikasi_data";
 import Tunel from "../components/panel/MapsKonten/tunel";
+import DataSurvey from "../components/Survey/DataSurvey/DataSurvey";
+import DetailReport from "../components/Maps/DetailReport";
 
 const HomePage = () => {
   const {
@@ -18,28 +21,37 @@ const HomePage = () => {
     isHidden,
     isOff,
     isEditProfile,
+    isDetailProfile,
     isProfile,
     isSetting,
     ismapsOpen,
     isrouteOpen,
     issurveyOpen,
-    InputData,
+    InputDetailReport,
+    isDataSurvey,
     koordinatSelected,
+    allDataSelected,
+    isDetailReport,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,
+    toggleDetailProfile,
     toggleSetting,
     hide,
     mapsOpen,
     routeOpen,
     surveyOpen,
+    openDataSurvey,
+    closeDataSurvey,
     ambilInput,
+    pinClickHandle,
+    closeDetailReport,
   } = useHomePageLogic();
   const [koordinat, setKoordinat] = useState([]);
 
-  useEffect(() => {
-    console.log("selected homepage :", koordinatSelected);
-  }, [koordinatSelected]);
+  // useEffect(() => {
+  //   console.log("selected homepage :", koordinatSelected);
+  // }, [koordinatSelected]);
 
   useEffect(() => {
     setKoordinat(koordinatSelected);
@@ -68,27 +80,40 @@ const HomePage = () => {
   }
 
   return (
-    <div>
-      <MapScreen hide={hide} koordinat={koordinat} />
-
+    <div className="transform scale-100">
+      <MapScreen hide={hide} koordinat={koordinat} allData={allDataSelected} pinClickHandle={pinClickHandle}/>
+      {isDetailReport && <DetailReport closeDetailReport={closeDetailReport} data={InputDetailReport}/>}
       <ProfileIcon
         isProfile={isProfile}
         toggleEditProfile={toggleEditProfile}
+        toggleDetailProfile={toggleDetailProfile}
         toggleSetting={toggleSetting}
         imgprofile={imgprofile}
       />
-      <SettingScreen isSetting={isSetting} />
+      <SettingScreen isSetting={isSetting} imgprofile={imgprofile} />
       <EditProfile
         isEditProfile={isEditProfile}
         toggleEditProfile={toggleEditProfile}
         profile={profile}
       />
-      <div className="w-1/3 h-80 absolute top-1 right-0 flex flex-col z-50">
+      <DetailProfile
+        isDetailProfile={isDetailProfile}
+        toggleDetailProfile={toggleDetailProfile}
+        profile={profile}
+        imgprofile={imgprofile}
+      />
+      {isDataSurvey && <DataSurvey closeDataSurvey={closeDataSurvey} />}
+      <div
+        className={`w-1/3 ${
+          ismapsOpen ? "h-8" : "h-80"
+        } absolute top-1 right-0 flex flex-col z-50`}
+      >
         <div className="flex h-8">
           <SurveyBtn
             isRotated={isRotated}
             surveyMenu={surveyMenu}
             isOff={isOff}
+            openDataSurvey={openDataSurvey}
           />
           <div className={`px-1 w-full h-auto z-50`}>
             <Panel

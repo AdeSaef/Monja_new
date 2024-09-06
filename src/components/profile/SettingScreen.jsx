@@ -1,13 +1,13 @@
 import React from "react";
-import profile from "../../assets/sample_profile_picture.jpeg";
 import { useNavigate } from "react-router-dom";
+import default_profile from "../../assets/sample_profile_picture.jpeg";
 
-
-const SettingScreen = ({ isSetting }) => {
+const SettingScreen = ({ isSetting, imgprofile }) => {
   const navigate = useNavigate();
   const updatePassword = () => {
     navigate("/new-password");
   };
+  const imageProfile = imgprofile || default_profile;
 
   const handleLogout = () => {
     navigate("/login");
@@ -21,7 +21,7 @@ const SettingScreen = ({ isSetting }) => {
     >
       <div className="flex m-2">
         <div className="w-16 h-16 p-0 rounded-full border-4 border-white overflow-hidden">
-          <img src={profile} alt="Profile" />
+          <img src={imageProfile} alt="Profile" />
         </div>
         <div className="text-white mx-2">
           <p>Hallo!,</p>

@@ -12,7 +12,7 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [ruteName, setRuteName] = useState([]);
   const [filteredRoutes, setFilteredRoutes] = useState([]);
-  const [inputData, setInputData] = useState({ rute: "", date: "" });
+  // const [inputData, setInputData] = useState({ rute: "", date: "" });
 
   const handleRouteChange = (route, guid) => {
     setSelected(route);
@@ -23,8 +23,10 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    ambilInput(selectedRute, selectedDate);
-    setInputData({ rute: selectedRute, date: selectedDate });
+    const datetconvert = formatDate(selectedDate);
+    ambilInput(selectedRute, datetconvert);
+
+    // setInputData({ rute: selectedRute, date: selectedDate });
     console.log({ rute: selectedRute, date: selectedDate });
   };
 
@@ -54,12 +56,16 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
 
   useEffect(() => {
     if (inputValue === "") {
-      // Jika input kosong, tampilkan semua rute
       setFilteredRoutes(ruteName);
     } else {
       initializeFuse(ruteName);
     }
   }, [inputValue, ruteName]);
+
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+  };
 
   return (
     <div className={`${ismapsOpen ? "hidden" : ""}`}>
@@ -98,9 +104,7 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
                   <input
                     type="text"
                     value={inputValue}
-                    onChange={(e) => {
-                      setInputValue(e.target.value);
-                    }}
+                    onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Enter route name"
                     className="placeholder:text-gray-700 p-2 outline-none focus:border-black focus:ring-black"
                   />
@@ -142,7 +146,7 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
             Cek Data
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={() => { setSelectedDate(""); setSelectedRute(""); }} // Reset nilai saat tombol Reset ditekan
             className="w-full mt-2 bg-yellow-500 text-white text-center text-sm px-4 py-1 rounded-lg hover:bg-yellow-300"
           >
             Reset

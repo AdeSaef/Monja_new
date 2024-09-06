@@ -11,6 +11,9 @@ import NewPassword from "../components/login/new_password.jsx";
 import ForgotPassword from "../components/login/forgotPassword.jsx";
 import ManajemenSurvey from "../components/panel/SurveyManajemen/manajemenSurvey.jsx";
 import ManajemenRoute from "../components/panel/RouteManajemen/manajemenRoute.jsx";
+import DataSurvey from "../components/Survey/DataSurvey/DataSurvey.jsx";
+import KurasiSurvey from "../components/Survey/kurasiSurvey/KurasiSurvey.jsx";
+import DetailKurasiSurvey from "../components/Survey/kurasiSurvey/DetailKurasiSurvey.jsx";
 
 
 
@@ -27,6 +30,7 @@ const AppRoutes = () => {
         <Route path="/survey" element={< ManajemenSurvey />} />
         <Route path="/route" element={< ManajemenRoute />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/test" element={<DetailKurasiSurvey />} />
       </Routes>
     </Router>
   );

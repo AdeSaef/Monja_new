@@ -5,8 +5,6 @@ import { getProfile, updateProfile } from "../../services/profileService";
 
 const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
   // State untuk menyimpan nama, nomor HP, dan data form
-  const [name, setName] = useState("");
-  const [noHp, setNumber] = useState("");
   const [formData, setFormData] = useState({
     newName: "",
     newPhoneNumber: "",
@@ -18,8 +16,6 @@ const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
       try {
         const profileData = await getProfile();
         if (profileData) {
-          setName(profileData.user.name);
-          setNumber(profileData.user.phoneNumber);
           setFormData({
             newName: profileData.user.name,
             newPhoneNumber: profileData.user.phoneNumber,
@@ -64,12 +60,12 @@ const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
         isEditProfile ? "opacity-100" : "opacity-0 hidden"
       }`}
     >
-      <div className="flex bg-gray-400 rounded-tr-xl w-28 text-center text-white">
+      <div className="flex bg-gray-400 rounded-tr-xl w-36 text-center text-white whitespace-nowrap">
         <ImCross
           className="text-white my-auto mx-1 cursor-pointer"
           onClick={toggleEditProfile}
         />
-        <p className="mx-2 text-sm">Atur Profile</p>
+        <p className="mx-auto text-lg">ATUR PROFILE</p>
       </div>
       <div className=" bg-gray-400 rounded-xl rounded-tl-none w-auto h-auto pt-0 pl-3 pr-6">
         <form onSubmit={handleSubmit}>

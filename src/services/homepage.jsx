@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getKoordinatReport } from "./ruteService";
+import { getDetailSurvey } from "./surveyService";
 
 export const useHomePageLogic = () => {
   const navigate = useNavigate();
@@ -8,13 +9,26 @@ export const useHomePageLogic = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [isOff, setIsOff] = useState(false);
   const [isEditProfile, setIsEditProfile] = useState(false);
+  const [isDetailProfile, setIsDetailProfile] = useState(false);
   const [isProfile, setIsProfile] = useState(true);
   const [isSetting, setIsSetting] = useState(false);
   const [ismapsOpen, setmapsOpen] = useState(false);
+  const [isDataSurvey, setIsDataSurvey] = useState(false);
   const [isrouteOpen, setrouteOpen] = useState(true);
   const [issurveyOpen, setsurveyOpen] = useState(true);
-  const [InputData, setData] = useState({});
+  const [InputDetailReport, setDetailReport] = useState({});
+  const [isDetailReport, setIsDetailReport] = useState(false);
   const [koordinatSelected, setKoordinat] = useState([]);
+  const [allDataSelected, setAllData] = useState({});
+
+  const openDataSurvey = ()=>{
+    setmapsOpen(true);
+    setIsDataSurvey(true);
+    surveyMenu();
+  }
+  const closeDataSurvey = ()=>{
+    setIsDataSurvey(false);
+  }
 
   const surveyMenu = () => {
     setIsRotated(!isRotated);
@@ -27,6 +41,10 @@ export const useHomePageLogic = () => {
 
   const toggleEditProfile = () => {
     setIsEditProfile((prev) => !prev);
+    setIsProfile((prev) => !prev);
+  };
+  const toggleDetailProfile = () => {
+    setIsDetailProfile((prev) => !prev);
     setIsProfile((prev) => !prev);
   };
 
@@ -67,21 +85,42 @@ export const useHomePageLogic = () => {
 
   const ambilKordinat = async (rute, tgl) => {
     try {
-      // Memanggil API atau service untuk mendapatkan data koordinat
-      const fetchkoordinat = await getKoordinatReport("3ec16c53-e88a-46cc-b5cb-05389ee1a2786fsfgf", tgl);
-      console.log("fetch", fetchkoordinat);
-  
-      // Ambil semua koordinat dari respons dan simpan dalam state
+      const fetchkoordinat = await getKoordinatReport(rute, tgl);
+
       const allKoordinat = fetchkoordinat.map((item) => item.coordinate);
+      const allData = fetchkoordinat;
       console.log("Semua koordinat:", allKoordinat);
-  
-      // Set state koordinatSelected dengan array koordinat yang diperoleh
+      console.log("Semua Data:", allData);
       setKoordinat(allKoordinat);
-      console.log("Koordinat selected setelah update:", allKoordinat);
+      setAllData(allData);
     } catch (error) {
       console.log("Error fetching koordinat:", error);
     }
   };
+
+  const ambilDetailReport = async (id) => {
+    try {
+      const fetchkoordinat = await getDetailSurvey(id);
+      // const allKoordinat = fetchkoordinat.map((item) => item.coordinate);
+      const allData = fetchkoordinat;
+      // console.log("Semua koordinat:", allKoordinat);
+      console.log("Semua Data Report:", allData);
+      setDetailReport(allData);
+      // setKoordinat(allKoordinat);
+      // setDetailSurvey(allData);
+    } catch (error) {
+      console.log("Error fetching koordinat:", error);
+    }
+  };
+
+  const pinClickHandle = (id) =>{
+    ambilDetailReport(id);
+    setIsDetailReport(true);
+  } 
+  const closeDetailReport = () =>{
+    setIsDetailReport(false);
+    setDetailReport(null);
+  } 
   
   const ambilInput = (rute, date) => {
     ambilKordinat(rute,date);
@@ -94,16 +133,21 @@ export const useHomePageLogic = () => {
     isHidden,
     isOff,
     isEditProfile,
+    isDetailProfile,
     isProfile,
     isSetting,
     ismapsOpen,
     isrouteOpen,
     issurveyOpen,
-    InputData,
+    isDataSurvey,
+    InputDetailReport,
+    isDetailReport,
     koordinatSelected,
+    allDataSelected,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,
+    toggleDetailProfile,
     toggleSetting,
     hide,
     mapsOpen,
@@ -112,6 +156,11 @@ export const useHomePageLogic = () => {
     ambilInput,
     setmapsOpen,
     setrouteOpen,
-    setsurveyOpen
+    setsurveyOpen,
+    openDataSurvey,
+    setIsDataSurvey,
+    closeDataSurvey,
+    pinClickHandle,
+    closeDetailReport
   };
 };
