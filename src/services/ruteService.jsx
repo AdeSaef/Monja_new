@@ -73,9 +73,7 @@ export const getRutebyId =async (ID)=>{
 export const getKoordinatReport =async (rute,tgl)=>{ 
     try{
     const rutekoordinat = await lokalApi.get(`final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`)
-    console.log(rutekoordinat)
     if  (rutekoordinat.data.success) { 
-        console.log(rutekoordinat.data.data);
         return rutekoordinat.data.data;
       } else {
         console.error (rutekoordinat.data.message);

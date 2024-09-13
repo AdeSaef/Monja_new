@@ -35,7 +35,6 @@ export const getSurveybyId = async (ID) => {
 export const getDetailSurvey = async (id) => {
   try {
     const Detail = await lokalApi.get(`/final-report/get/${id}`);
-    console.log("detail data : ",Detail);
     if (Detail.data.success) {
       return Detail.data.data;
     } else {

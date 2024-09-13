@@ -14,6 +14,9 @@ import ManajemenRoute from "../components/panel/RouteManajemen/manajemenRoute.js
 import DataSurvey from "../components/Survey/DataSurvey/DataSurvey.jsx";
 import KurasiSurvey from "../components/Survey/kurasiSurvey/KurasiSurvey.jsx";
 import DetailKurasiSurvey from "../components/Survey/kurasiSurvey/DetailKurasiSurvey.jsx";
+import MoreDetailReport from "../components/Report/DetailReport.jsx";
+// import FileList from "../api/test.jsx";
+// import ImageComponent from "../api/test.jsx";
 
 
 
@@ -30,7 +33,8 @@ const AppRoutes = () => {
         <Route path="/survey" element={< ManajemenSurvey />} />
         <Route path="/route" element={< ManajemenRoute />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/test" element={<DetailKurasiSurvey />} />
+        {/* <Route path="/test" element={<MoreDetailReport />} /> */}
+        {/* <Route path="/file" element={<FileList fileName="GX010359.MP4_0-02-06.00.jpg"/>} /> */}
       </Routes>
     </Router>
   );

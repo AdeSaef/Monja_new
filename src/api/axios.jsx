@@ -9,12 +9,12 @@ export const serverApi = axios.create({
     baseURL: 'https://monja.pptik.id/api/',
 });
 
-//api lokal
+// api lokal
 export const lokalApi = axios.create({
-    baseURL: 'http://192.168.10.79:5092/',
+    baseURL: 'http://192.168.10.107:5092/',
 });
 // export const lokalApi = axios.create({
-//     baseURL: 'http://192.168.43.89:5092/',
+//     baseURL: 'http://localhost:5092/',
 // });
 
 //guid Application

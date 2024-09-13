@@ -18,6 +18,7 @@ export const useHomePageLogic = () => {
   const [issurveyOpen, setsurveyOpen] = useState(true);
   const [InputDetailReport, setDetailReport] = useState({});
   const [isDetailReport, setIsDetailReport] = useState(false);
+  const [isMoreDetailReport, setIsMoreDetailReport] = useState(false);
   const [koordinatSelected, setKoordinat] = useState([]);
   const [allDataSelected, setAllData] = useState({});
 
@@ -89,8 +90,6 @@ export const useHomePageLogic = () => {
 
       const allKoordinat = fetchkoordinat.map((item) => item.coordinate);
       const allData = fetchkoordinat;
-      console.log("Semua koordinat:", allKoordinat);
-      console.log("Semua Data:", allData);
       setKoordinat(allKoordinat);
       setAllData(allData);
     } catch (error) {
@@ -101,13 +100,8 @@ export const useHomePageLogic = () => {
   const ambilDetailReport = async (id) => {
     try {
       const fetchkoordinat = await getDetailSurvey(id);
-      // const allKoordinat = fetchkoordinat.map((item) => item.coordinate);
       const allData = fetchkoordinat;
-      // console.log("Semua koordinat:", allKoordinat);
-      console.log("Semua Data Report:", allData);
       setDetailReport(allData);
-      // setKoordinat(allKoordinat);
-      // setDetailSurvey(allData);
     } catch (error) {
       console.log("Error fetching koordinat:", error);
     }
@@ -117,9 +111,15 @@ export const useHomePageLogic = () => {
     ambilDetailReport(id);
     setIsDetailReport(true);
   } 
+  const MoreDetailOpen = (id) =>{
+    ambilDetailReport(id);
+    setIsMoreDetailReport(true);
+  } 
   const closeDetailReport = () =>{
     setIsDetailReport(false);
-    setDetailReport(null);
+  } 
+  const closeMoreDetailReport = () =>{
+    setIsMoreDetailReport(false);
   } 
   
   const ambilInput = (rute, date) => {
@@ -142,6 +142,7 @@ export const useHomePageLogic = () => {
     isDataSurvey,
     InputDetailReport,
     isDetailReport,
+    isMoreDetailReport,
     koordinatSelected,
     allDataSelected,
     surveyMenu,
@@ -161,6 +162,8 @@ export const useHomePageLogic = () => {
     setIsDataSurvey,
     closeDataSurvey,
     pinClickHandle,
-    closeDetailReport
+    closeDetailReport,
+    closeMoreDetailReport,
+    MoreDetailOpen,
   };
 };

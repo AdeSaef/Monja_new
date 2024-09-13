@@ -136,7 +136,7 @@ const MapScreen = ({ hide, koordinat, allData, pinClickHandle }) => {
                 eventHandlers={{
                   click: () => {
                     console.log(`Pinpoint clicked at coordinates: ${data.id}`);
-                    pinClickHandle(`${data.id}`);
+                    pinClickHandle(data.id, data.namafile);
                   },
                 }}
               >

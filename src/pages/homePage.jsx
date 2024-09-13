@@ -14,6 +14,7 @@ import { Validation } from "../services/verifikasi_data";
 import Tunel from "../components/panel/MapsKonten/tunel";
 import DataSurvey from "../components/Survey/DataSurvey/DataSurvey";
 import DetailReport from "../components/Maps/DetailReport";
+import MoreDetailReport from "../components/Report/DetailReport";
 
 const HomePage = () => {
   const {
@@ -32,6 +33,7 @@ const HomePage = () => {
     koordinatSelected,
     allDataSelected,
     isDetailReport,
+    isMoreDetailReport,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,
@@ -46,6 +48,8 @@ const HomePage = () => {
     ambilInput,
     pinClickHandle,
     closeDetailReport,
+    closeMoreDetailReport,
+    MoreDetailOpen,
   } = useHomePageLogic();
   const [koordinat, setKoordinat] = useState([]);
 
@@ -82,7 +86,9 @@ const HomePage = () => {
   return (
     <div className="transform scale-100">
       <MapScreen hide={hide} koordinat={koordinat} allData={allDataSelected} pinClickHandle={pinClickHandle}/>
-      {isDetailReport && <DetailReport closeDetailReport={closeDetailReport} data={InputDetailReport}/>}
+      {isDetailReport && <DetailReport closeDetailReport={closeDetailReport} data={InputDetailReport} MoreDetailOpen={MoreDetailOpen} />}
+      {isMoreDetailReport && <MoreDetailReport closeMoreDetailReport={closeMoreDetailReport} data={InputDetailReport}/>}
+      {/* <MoreDetailReport data={InputDetailReport}/> */}
       <ProfileIcon
         isProfile={isProfile}
         toggleEditProfile={toggleEditProfile}
@@ -106,7 +112,7 @@ const HomePage = () => {
       <div
         className={`w-1/3 ${
           ismapsOpen ? "h-8" : "h-80"
-        } absolute top-1 right-0 flex flex-col z-50`}
+        } absolute top-1 right-0 flex flex-col z-30`}
       >
         <div className="flex h-8">
           <SurveyBtn

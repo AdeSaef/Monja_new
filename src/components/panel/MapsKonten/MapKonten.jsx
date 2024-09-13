@@ -25,9 +25,6 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
     event.preventDefault();
     const datetconvert = formatDate(selectedDate);
     ambilInput(selectedRute, datetconvert);
-
-    // setInputData({ rute: selectedRute, date: selectedDate });
-    console.log({ rute: selectedRute, date: selectedDate });
   };
 
   const fetchRute = async () => {
@@ -97,7 +94,7 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
               <ul
                 className={`bg-white absolute z-10 mt-1 mx-3 left-0 right-0 overflow-y-auto ${
                   open ? "max-h-60" : "max-h-0 border-none"
-                } transition-all duration-300 border-2 rounded-lg border-gray-700`}
+                } transition-all duration-300 border rounded-lg border-gray-700`}
               >
                 <div className="flex items-center px-2 sticky top-0 bg-white">
                   <AiOutlineSearch size={18} className="text-gray-700" />
