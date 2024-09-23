@@ -1,8 +1,8 @@
-import { lokalApi, serverApi } from "../api/axios";
+import { serverApi } from "../api/axios";
 
 export const getSurveyData = async (page) => {
   try {
-    const surveyData = await lokalApi.get(`/survey/get?page=${page}`);
+    const surveyData = await serverApi.get(`/survey/get?page=${page}`);
     console.log(surveyData);
     if (surveyData.data.success) {
       return surveyData.data;
@@ -18,7 +18,7 @@ export const getSurveyData = async (page) => {
 
 export const getSurveybyId = async (ID) => {
   try {
-    const surveyDetail = await lokalApi.get(`/survey/get/guid/${ID}`);
+    const surveyDetail = await serverApi.get(`/survey/get/guid/${ID}`);
     console.log(surveyDetail);
     if (surveyDetail.data.success) {
       return surveyDetail.data.data;
@@ -34,7 +34,7 @@ export const getSurveybyId = async (ID) => {
 
 export const getDetailSurvey = async (id) => {
   try {
-    const Detail = await lokalApi.get(`/final-report/get/${id}`);
+    const Detail = await serverApi.get(`/final-report/get/${id}`);
     if (Detail.data.success) {
       return Detail.data.data;
     } else {

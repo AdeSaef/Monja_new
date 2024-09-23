@@ -21,6 +21,7 @@ export const useHomePageLogic = () => {
   const [isMoreDetailReport, setIsMoreDetailReport] = useState(false);
   const [koordinatSelected, setKoordinat] = useState([]);
   const [allDataSelected, setAllData] = useState({});
+  const [notFound, setNotFound] = useState(false);
 
   const openDataSurvey = ()=>{
     setmapsOpen(true);
@@ -46,7 +47,7 @@ export const useHomePageLogic = () => {
   };
   const toggleDetailProfile = () => {
     setIsDetailProfile((prev) => !prev);
-    setIsProfile((prev) => !prev);
+    setIsProfile(true);
   };
 
   const toggleSetting = () => {
@@ -92,7 +93,9 @@ export const useHomePageLogic = () => {
       const allData = fetchkoordinat;
       setKoordinat(allKoordinat);
       setAllData(allData);
+      setNotFound(false);
     } catch (error) {
+      setNotFound(true);
       console.log("Error fetching koordinat:", error);
     }
   };
@@ -101,6 +104,7 @@ export const useHomePageLogic = () => {
     try {
       const fetchkoordinat = await getDetailSurvey(id);
       const allData = fetchkoordinat;
+      console.log("alldata :",allData);
       setDetailReport(allData);
     } catch (error) {
       console.log("Error fetching koordinat:", error);
@@ -145,6 +149,7 @@ export const useHomePageLogic = () => {
     isMoreDetailReport,
     koordinatSelected,
     allDataSelected,
+    notFound,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,

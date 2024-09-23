@@ -1,9 +1,9 @@
-import { userApi, lokalApi } from "../api/axios";
+import { serverApi } from "../api/axios";
 
 
 export const getRuteData = async (page) => { 
   try {
-    const ruteData = await lokalApi.get(`/rute/get?page=${page ? page : 1}&keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
+    const ruteData = await serverApi.get(`/rute/get?page=${page ? page : 1}&keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
     // console.log(ruteData.data)
     
     if (ruteData.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
@@ -22,7 +22,7 @@ export const getRuteData = async (page) => {
 };
 export const getRuteName = async () => { 
   try {
-    const ruteData = await lokalApi.get(`/rute/get/company?keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
+    const ruteData = await serverApi.get(`/rute/get/company?keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
     // console.log(ruteData.data)
     
     if (ruteData.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
@@ -39,7 +39,7 @@ export const getRuteName = async () => {
 
 export const getRuteDetail = async (guid) => { 
   try {
-    const ruteDetail = await lokalApi.get(`/rute/get/guid/${guid}`);
+    const ruteDetail = await serverApi.get(`/rute/get/guid/${guid}`);
     console.log(ruteDetail.data.data);
     
     if (ruteDetail.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
@@ -57,7 +57,7 @@ export const getRuteDetail = async (guid) => {
 
 export const getRutebyId =async (ID)=>{ 
     try{
-    const ruteDetail = await lokalApi.get(`/rute/get/guid/${ID}`)
+    const ruteDetail = await serverApi.get(`/rute/get/guid/${ID}`)
     console.log (ruteDetail)
     if  (ruteDetail.data.success) { //-1 's'
         return ruteDetail.data.data;
@@ -72,7 +72,7 @@ export const getRutebyId =async (ID)=>{
 }
 export const getKoordinatReport =async (rute,tgl)=>{ 
     try{
-    const rutekoordinat = await lokalApi.get(`final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`)
+    const rutekoordinat = await serverApi.get(`final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`)
     if  (rutekoordinat.data.success) { 
         return rutekoordinat.data.data;
       } else {
@@ -86,7 +86,7 @@ export const getKoordinatReport =async (rute,tgl)=>{
 }
 export const deleteRutebyGuid =async (guid)=>{ 
     try{
-    const deleteRute = await lokalApi.delete(`/rute/delete/guid/${guid}`)
+    const deleteRute = await serverApi.delete(`/rute/delete/guid/${guid}`)
     console.log (deleteRute)
     if  (deleteRute.data.success) {
         return deleteRute.data.message;
@@ -101,7 +101,7 @@ export const deleteRutebyGuid =async (guid)=>{
 }
 export const CreateRute =async (formData)=>{ 
     try{
-    const createRute = await lokalApi.post(`/rute/app`,formData)
+    const createRute = await serverApi.post(`/rute/app`,formData)
     console.log (createRute)
     if  (createRute.data.success) {
         return createRute.data.message;

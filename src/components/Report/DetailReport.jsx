@@ -16,66 +16,55 @@ const MoreDetailReport = ({ data, closeMoreDetailReport }) => {
   const [onBahu, setOnBahu] = useState(false);
   const [onKondisi, setOnKondisi] = useState(false);
 
-  const openDetail =() =>{
+  const openDetail = () => {
     setOnDetail(true);
     setOnKekerasan(false);
     setOnRetakan(false);
     setOnOther(false);
     setOnBahu(false);
     setOnKondisi(false);
-  }
-  const openKekerasan =() =>{
+  };
+  const openKekerasan = () => {
     setOnDetail(false);
     setOnKekerasan(true);
     setOnRetakan(false);
     setOnOther(false);
     setOnBahu(false);
     setOnKondisi(false);
-  }
-  const openRetakan =() =>{
+  };
+  const openRetakan = () => {
     setOnDetail(false);
     setOnKekerasan(false);
     setOnRetakan(true);
     setOnOther(false);
     setOnBahu(false);
     setOnKondisi(false);
-  }
-  const openOther =() =>{
+  };
+  const openOther = () => {
     setOnDetail(false);
     setOnKekerasan(false);
     setOnRetakan(false);
     setOnOther(true);
     setOnBahu(false);
     setOnKondisi(false);
-  }
-  const openBahu =() =>{
+  };
+  const openBahu = () => {
     setOnDetail(false);
     setOnKekerasan(false);
     setOnRetakan(false);
     setOnOther(false);
     setOnBahu(true);
     setOnKondisi(false);
-  }
-  const openKondisi =() =>{
+  };
+  const openKondisi = () => {
     setOnDetail(false);
     setOnKekerasan(false);
     setOnRetakan(false);
     setOnOther(false);
     setOnBahu(false);
     setOnKondisi(true);
-  }
-  useEffect(() => {
-    // Fungsi async di dalam useEffect untuk fetch gambar
-    const fetchImage = async () => {
-      // console.log("nama file : ",data.namafile);
-      const imgSrc = await getImage(data.namafile);
-      // const imgSrc = await getImage('GX010359.MP4_0-02-06.00.jpg');
-      setImageSrc(imgSrc);
-      // console.log(imageURL); // Set gambar URL ke state
-    };
+  };
 
-    fetchImage(); // Panggil fungsi async
-  }, [data.namafile]); // Tambahkan dependency agar hanya dipanggil saat fileName berubah
   return (
     <div className="absolute top-0 left-0 w-screen h-screen flex z-50 bg-white overflow-x-hidden">
       {/* Bagian kiri: Gambar dan Detail */}
@@ -88,25 +77,33 @@ const MoreDetailReport = ({ data, closeMoreDetailReport }) => {
             X
           </div>
           {/* Gambar */}
-          <div className="w-full flex items-center justify-center mr-40 mt-8 min-h-72">
-            {imageURL ? ( // Menampilkan gambar jika imageURL tersedia
-            <img src={imageURL} alt={data.fileName} className="w-full h-auto"/>
-          ) : (
-            <p>Loading image...</p> // Placeholder saat gambar sedang dimuat
-          )}
+          <div className="w-full h-full min-h-40 bg-white m-auto text-center">
+            {data.namafile ? (
+              <img
+                src={`https://monitoring.pptik.id/data/road_coba/gambar/${data.namafile}`}
+                alt={data.namafile}
+                className="w-full h-auto"
+              />
+            ) : (
+              <p>No image available</p>
+            )}
           </div>
         </div>
         {/* Detail */}
         {/* <div className="bg-green-300 flex-1 flex items-center justify-center">
           <h2>Detail</h2>
         </div> */}
-        <div className={`border-2 ${onBahu?"":"p-4"} ${onKondisi? "":"items-center justify-center flex-1 "}flex flex-col select-none`}>
-            {onDetail && <Detail data={data}/>}
-            {onKekerasan && <Kekerasan data={data}/>}
-            {onRetakan && <Retakan data={data}/>}
-            {onOther && <KerusakanLain data={data}/>}
-            {onBahu && <BahuSaluran data={data}/>}
-            {onKondisi && <KondisiJalan data={data}/>}
+        <div
+          className={`border-2 ${onBahu ? "" : "p-4"} ${
+            onKondisi ? "" : "items-center justify-center flex-1 "
+          }flex flex-col select-none`}
+        >
+          {onDetail && <Detail data={data} />}
+          {onKekerasan && <Kekerasan data={data} />}
+          {onRetakan && <Retakan data={data} />}
+          {onOther && <KerusakanLain data={data} />}
+          {onBahu && <BahuSaluran data={data} />}
+          {onKondisi && <KondisiJalan data={data} />}
         </div>
       </div>
 
@@ -115,42 +112,84 @@ const MoreDetailReport = ({ data, closeMoreDetailReport }) => {
         <div className="w-full h-auto">
           <div className="flex flex-col border-r-2 border-gray-300 mr-4 mt-2">
             <div className="text-end flex flex-wrap justify-end mb-4">
-              <div className={`group ${onDetail ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openDetail}>
+              <div
+                className={`group ${
+                  onDetail
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openDetail}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Detail
                 </div>
               </div>
             </div>
             <div className="text-end flex flex-wrap justify-end my-4">
-              <div className={`group ${onKekerasan ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openKekerasan}>
+              <div
+                className={`group ${
+                  onKekerasan
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openKekerasan}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Kekerasan
                 </div>
               </div>
             </div>
             <div className="text-end flex flex-wrap justify-end my-4">
-              <div className={`group ${onRetakan ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openRetakan}>
+              <div
+                className={`group ${
+                  onRetakan
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openRetakan}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Retak-retak
                 </div>
               </div>
             </div>
             <div className="text-end flex flex-wrap justify-end my-4">
-              <div className={`group ${onOther ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openOther}>
+              <div
+                className={`group ${
+                  onOther
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openOther}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Kerusakan Lain
                 </div>
               </div>
             </div>
             <div className="text-end flex flex-wrap justify-end my-4">
-              <div className={`group ${onBahu ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openBahu}>
+              <div
+                className={`group ${
+                  onBahu
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openBahu}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Bahu Saluran
                 </div>
               </div>
             </div>
             <div className="text-end flex flex-wrap justify-end mt-2 mb-4">
-              <div className={`group ${onKondisi ? "bg-gray-300 text-white" : "bg-gradient-to-r from-white to-gray-300"} transition duration-300`} onClick={openKondisi}>
+              <div
+                className={`group ${
+                  onKondisi
+                    ? "bg-gray-300 text-white"
+                    : "bg-gradient-to-r from-white to-gray-300"
+                } transition duration-300`}
+                onClick={openKondisi}
+              >
                 <div className="group-hover:bg-gray-300 group-hover:text-white pl-4 pr-2 text-2xl font-semibold select-none cursor-pointer">
                   Kondisi Jalan
                 </div>

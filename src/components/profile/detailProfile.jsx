@@ -15,13 +15,14 @@ const DetailProfile = ({
     newPhoneNumber: "",
   });
 
-  const [dataProfile, setDetail] = useState({
+  const [dataProfile, setDataProfile] = useState({
     name: "",
     phoneNumber: "",
     guid: "",
     email: "",
     role: "",
     guidAplication: "",
+    imageProfile: "",
   });
 
   useEffect(() => {
@@ -29,22 +30,18 @@ const DetailProfile = ({
       try {
         const profileData = await getProfile();
         if (profileData) {
-          setDetail({
-            newName: profileData.user.name,
-            newPhoneNumber: profileData.user.phoneNumber,
-            guid: profileData.user.guid,
-            email: profileData.user.email,
-            role: profileData.user.applications[0].role,
-            guidAplication: profileData.user.applications[0].guidAplication,
-            imageProfile: profileData.user.imageProfile,
-          });
-          setFormData({
+          setDataProfile({
             name: profileData.user.name,
             phoneNumber: profileData.user.phoneNumber,
             guid: profileData.user.guid,
             email: profileData.user.email,
             role: profileData.user.applications.role,
             guidAplication: profileData.user.applications.guidAplication,
+            imageProfile: profileData.user.imageProfile,
+          });
+          setFormData({
+            newName: profileData.user.name,
+            newPhoneNumber: profileData.user.phoneNumber,
           });
         }
       } catch (error) {
@@ -114,67 +111,22 @@ const DetailProfile = ({
 
   return (
     <div
-      className={`w-auto h-auto absolute top-0 left-0 flex flex-col select-none transition-opacity duration-500 ${
+      className={`w-screen h-screen z-50 absolute top-0 left-0 flex items-center justify-center bg-black bg-opacity-75 transition-opacity duration-500 ${
         isDetailProfile ? "opacity-100" : "opacity-0 hidden"
       }`}
     >
-      <div className="flex bg-gray-400 rounded-t-xl w-32 text-center text-white whitespace-nowrap mx-auto">
-        <p className="text-lg mx-auto PX-2">ATUR PROFILE</p>
-      </div>
-      <div className="bg-gray-400 rounded-xl rounded-tl-none w-auto h-auto pt-0 pl-3 pr-6 ">
-        <ImCross
-          className="text-white my-auto mx-1 cursor-pointer mt-2"
-          onClick={toggleDetailProfile}
-        />
-        <div className="w-24 h-24 mx-auto mt-2 rounded-full border-4 border-white overflow-hidden select-none flex items-center">
+      <ImCross
+        className="text-white absolute top-8 left-8 cursor-pointer text-2xl"
+        onClick={toggleDetailProfile}
+      />
+      <div className="relative">
+        <div className="w-1/3 h-auto mx-auto rounded-full border-4 border-white overflow-hidden select-none flex items-center">
           <img
             src={imageProfile}
             alt="Profile"
-            className="w-full h-full object-cover select-none cursor-pointer"
-            onClick={triggerFileInput}
-          />
-          <input
-            type="file"
-            id="fileInput"
-            className="hidden"
-            onChange={handleImageChange}
+            className="w-full h-full object-cover select-none"
           />
         </div>
-        <form onSubmit={handleSubmit}>
-          {[
-            { field: "guid", label: "GUID", disabled: true },
-            { field: "name", label: "Name", disabled: false },
-            { field: "email", label: "Email", disabled: true },
-            {
-              field: "guidAplication",
-              label: "GUID Application",
-              disabled: true,
-            },
-            { field: "role", label: "Role", disabled: true },
-            { field: "phoneNumber", label: "Phone Number", disabled: false },
-          ].map(({ field, label, disabled }) => (
-            <div className="flex flex-col mb-2" key={field}>
-              <label className="text-white mx-1 text-xs">{label}</label>
-              <input
-                type="text"
-                className="rounded-md w-64 p-1"
-                name={field}
-                value={dataProfile[field] || ""}
-                placeholder={label}
-                onChange={handleChange}
-                disabled={disabled}
-              />
-            </div>
-          ))}
-          <div className="flex justify-end my-3">
-            <button
-              className="bg-yellow-400 text-center text-sm text-white rounded-md px-2"
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import default_profile from "../../assets/sample_profile_picture.jpeg";
 
-const SettingScreen = ({ isSetting, imgprofile }) => {
+const SettingScreen = ({ isSetting, imgprofile, username }) => {
   const navigate = useNavigate();
   const updatePassword = () => {
     navigate("/new-password");
@@ -25,14 +25,14 @@ const SettingScreen = ({ isSetting, imgprofile }) => {
         </div>
         <div className="text-white mx-2">
           <p>Hallo!,</p>
-          <p>Admin123</p>
+          <p>{username.name}</p>
         </div>
       </div>
-      <div className="border border-white border-x-0 p-1 text-white">
+      {/* <div className="border border-white border-x-0 p-1 text-white">
         Ubah Akun Email
-      </div>
+      </div> */}
       <div
-        className="border border-white border-x-0 border-t-0 p-1 text-white hover:bg-gray-600 select-none"
+        className="border border-white border-x-0 p-1 text-white hover:bg-gray-600 select-none"
         onClick={updatePassword}
       >
         Ubah Password

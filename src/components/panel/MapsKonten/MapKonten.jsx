@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Fuse from "fuse.js";
 import { getRuteName } from "../../../services/ruteService";
 
-const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
+const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, notFound }) => {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
@@ -135,6 +135,7 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
               onChange={(e) => setSelectedDate(e.target.value)}
             />
           </div>
+          <div className={`text-red-600 ${notFound?"":"hidden"}`}>Data Tidak Ditemukan.</div>
 
           <button
             onClick={handleSubmit}
@@ -143,13 +144,12 @@ const MapsKonten = ({ isHidden, ismapsOpen, ambilInput, test }) => {
             Cek Data
           </button>
           <button
-            onClick={() => { setSelectedDate(""); setSelectedRute(""); }} // Reset nilai saat tombol Reset ditekan
+            onClick={() => window.location.reload()} // Halaman akan reload saat tombol Reset ditekan
             className="w-full mt-2 bg-yellow-500 text-white text-center text-sm px-4 py-1 rounded-lg hover:bg-yellow-300"
           >
             Reset
           </button>
           <button
-            onClick={test}
             className="w-full mt-2 bg-green-400 text-white text-center text-sm px-4 py-1 rounded-lg hover:bg-green-300"
           >
             Download Report Rute

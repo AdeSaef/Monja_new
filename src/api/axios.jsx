@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const userApi = axios.create({
-    baseURL: 'https://sso.pptik.id/api/v1/',
+    baseURL: 'https://api-sso.lskk.co.id/v1/',
 });
 
 //api projek

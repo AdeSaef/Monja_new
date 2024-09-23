@@ -6,7 +6,7 @@ const AuthPage = ({mode, wlogo = null, lsize, ssize}) => {
   return (
     <div className="login-box">
       {wlogo}
-      <div className="flex">
+      <div className="flex select-none">
         <Box lsize={lsize} ssize={ssize}>
           {mode}
         </Box>

@@ -2,25 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getImage } from "../../services/reportServices";
 
 const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
-  const [imageURL, setImageSrc] = useState(null);
+  // const [imageURL, setImageSrc] = useState(null);
   const [loading, setLoading] = useState(true); // State loading untuk menangani status loading
-
-  useEffect(() => {
-    if (data && data.namafile) {
-      const fetchImage = async () => {
-        try {
-          const imgSrc = await getImage(data.namafile);
-          setImageSrc(imgSrc);
-        } catch (error) {
-          console.error("Error fetching image:", error);
-        } finally {
-          setLoading(false); // Pastikan loading selesai apapun hasil fetch-nya
-        }
-      };
-
-      fetchImage(); // Memulai fetching gambar saat data tersedia
-    }
-  }, [data]);
 
   const openMoreDetailReport = () => {
     MoreDetailOpen(data.id);
@@ -40,12 +23,14 @@ const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
         </div> */}
         {/* Placeholder Image */}
         <div className="w-full h-full min-h-40 bg-white m-auto text-center">
-          {loading ? (
-            <p>Loading image...</p> // Placeholder saat gambar sedang dimuat
-          ) : imageURL ? (
-            <img src={imageURL} alt={data.namafile} className="w-full h-auto" />
+          {data.namafile ? (
+            <img
+              src={`https://monitoring.pptik.id/data/road_coba/gambar/${data.namafile}`}
+              alt={data.namafile}
+              className="w-full h-auto"
+            />
           ) : (
-            <p>No image available</p> // Placeholder jika gambar tidak ada
+            <p>No image available</p>
           )}
         </div>
       </div>

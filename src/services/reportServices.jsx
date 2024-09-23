@@ -1,8 +1,8 @@
-import { lokalApi } from "../api/axios";
+import { serverApi } from "../api/axios";
 
 export const getImage = async (fileName) => {
     try {
-      const response = await lokalApi.get(`/ftv/image/${fileName}`, {
+      const response = await serverApi.get(`/ftv/image/${fileName}`, {
         responseType: 'blob', // Mendapatkan response sebagai Blob untuk file biner
       });
   

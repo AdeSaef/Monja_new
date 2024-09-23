@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { ImCross } from "react-icons/im";
-import { getProfile, updateProfile } from "../../services/profileService";
-// import { updateProfile } from "../../services/profileService";
+import { getProfile, updateProfile, uploadProfileImage } from "../../services/profileService";
+import default_profile from "../../assets/sample_profile_picture.jpeg";
 
-const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
-  // State untuk menyimpan nama, nomor HP, dan data form
+const EditProfile = ({ isEditProfile, toggleEditProfile, imgprofile }) => {
+  // State untuk menyimpan nama, nomor HP, alamat, dan data form
   const [formData, setFormData] = useState({
     newName: "",
     newPhoneNumber: "",
-    newPassword: "",
+    newAddress: "",
+  });
+
+  const [dataProfile, setDataProfile] = useState({
+    name: "",
+    phoneNumber: "",
+    guid: "",
+    email: "",
+    role: "",
+    guidAplication: "",
+    imageProfile: "",
   });
 
   useEffect(() => {
@@ -16,10 +26,19 @@ const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
       try {
         const profileData = await getProfile();
         if (profileData) {
+          setDataProfile({
+            name: profileData.user.name,
+            phoneNumber: profileData.user.phoneNumber,
+            guid: profileData.user.guid,
+            email: profileData.user.email,
+            role: profileData.user.applications.role,
+            guidAplication: profileData.user.applications.guidAplication,
+            imageProfile: profileData.user.imageProfile,
+          });
           setFormData({
             newName: profileData.user.name,
             newPhoneNumber: profileData.user.phoneNumber,
-            newPassword: "",
+            newAddress: profileData.user.address,
           });
         }
       } catch (error) {
@@ -37,21 +56,54 @@ const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await updateProfile(formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await updateProfile(formData);
+      if (response.data.success) {
+        alert(response.data.message);
+        // navigate("/berhasil");
+      } else {
+        alert("Gagal mengubah profile. Silakan coba lagi.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Terjadi kesalahan. Silakan coba lagi nanti.");
+    }
+  };
 
-  //     if (response.data.success) {
-  //       alert(response.data.message);
-  //       navigate("/berhasil");
-  //     } else {
-  //       alert("Gagal mengubah password. Silakan coba lagi.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     alert("Terjadi kesalahan. Silakan coba lagi nanti.");
-  //   }
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const imageProfile = selectedImage || imgprofile || default_profile;
+
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        setSelectedImage(reader.result);
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          const response = await uploadProfileImage(formData);
+          if (response.success) {
+            alert("Gambar profil berhasil diupdate!");
+          } else {
+            alert(response.message);
+          }
+        } catch (error) {
+          alert("Terjadi kesalahan saat mengupload gambar.");
+          console.error("Error:", error);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById("fileInput").click();
   };
 
   return (
@@ -67,22 +119,38 @@ const EditProfile = ({ isEditProfile, toggleEditProfile }) => {
         />
         <p className="mx-auto text-lg">ATUR PROFILE</p>
       </div>
-      <div className=" bg-gray-400 rounded-xl rounded-tl-none w-auto h-auto pt-0 pl-3 pr-6">
+      <div className="bg-gray-400 rounded-xl rounded-tl-none w-auto h-auto pt-0 pl-3 pr-6">
+        <div className="w-24 h-24 mx-auto mt-2 rounded-full border-4 border-white overflow-hidden select-none flex items-center">
+          <img
+            src={imageProfile}
+            alt="Profile"
+            className="w-full h-full object-cover select-none cursor-pointer"
+            onClick={triggerFileInput}
+          />
+          <input
+            type="file"
+            id="fileInput"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+        </div>
         <form onSubmit={handleSubmit}>
           {[
             { field: "newName", label: "Name" },
             { field: "newPhoneNumber", label: "Phone Number" },
-            { field: "newPassword", label: "Password" },
-          ].map(({ field, label }) => (
+            { field: "newAddress", label: "Address" },
+            { field: "email", label: "Email", disabled: true }, // Tambahkan input email yang dinonaktifkan
+          ].map(({ field, label, disabled }) => (
             <div className="flex flex-col mb-2" key={field}>
               <label className="text-white mx-1 text-xs">{label}</label>
               <input
-                type={field === "newPassword" ? "password" : "text"}
+                type="text"
                 className="rounded-md w-64 p-1"
                 name={field}
-                value={formData[field]}
+                value={formData[field] || dataProfile[field] || ""}
                 placeholder={label}
                 onChange={handleChange}
+                disabled={disabled}
               />
             </div>
           ))}

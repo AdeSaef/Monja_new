@@ -34,6 +34,7 @@ const HomePage = () => {
     allDataSelected,
     isDetailReport,
     isMoreDetailReport,
+    notFound,
     surveyMenu,
     buttonPanel,
     toggleEditProfile,
@@ -96,11 +97,12 @@ const HomePage = () => {
         toggleSetting={toggleSetting}
         imgprofile={imgprofile}
       />
-      <SettingScreen isSetting={isSetting} imgprofile={imgprofile} />
+      <SettingScreen isSetting={isSetting} imgprofile={imgprofile} username={profile}/>
       <EditProfile
         isEditProfile={isEditProfile}
         toggleEditProfile={toggleEditProfile}
         profile={profile}
+        imgprofile={imgprofile}
       />
       <DetailProfile
         isDetailProfile={isDetailProfile}
@@ -139,6 +141,7 @@ const HomePage = () => {
               isHidden={isHidden}
               ismapsOpen={ismapsOpen}
               ambilInput={ambilInput}
+              notFound={notFound}
             />
           </div>
         </div>

@@ -30,7 +30,7 @@ function FormLogin() {
 
       if (response.data.success) {
         alert(response.data.message);
-        
+        console.log(response.data.data);
         const userToken = response.data.data.userToken;
         const appToken = response.data.data.appToken;
         localStorage.setItem('userToken', userToken); 
