@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getSurveybyId } from "../../../services/surveyService";
 
 const DetailTable = ({ data }) => {
+  console.log(data);
   return (
     <div className="container mx-auto p-0">
       <table className="min-w-full bg-white border">
