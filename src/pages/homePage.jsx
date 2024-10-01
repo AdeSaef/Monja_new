@@ -15,6 +15,8 @@ import Tunel from "../components/panel/MapsKonten/tunel";
 import DataSurvey from "../components/Survey/DataSurvey/DataSurvey";
 import DetailReport from "../components/Maps/DetailReport";
 import MoreDetailReport from "../components/Report/DetailReport";
+import KurasiSurvey from "../components/Survey/kurasiSurvey/KurasiSurvey";
+import DetailKurasiSurvey from "../components/Survey/kurasiSurvey/DetailKurasiSurvey";
 
 const HomePage = () => {
   const {
@@ -30,6 +32,7 @@ const HomePage = () => {
     issurveyOpen,
     InputDetailReport,
     isDataSurvey,
+    isKurasiSurvey,
     koordinatSelected,
     allDataSelected,
     isDetailReport,
@@ -45,7 +48,9 @@ const HomePage = () => {
     routeOpen,
     surveyOpen,
     openDataSurvey,
+    openKurasiSurvey,
     closeDataSurvey,
+    closeKurasiSurvey,
     ambilInput,
     pinClickHandle,
     closeDetailReport,
@@ -89,7 +94,6 @@ const HomePage = () => {
       <MapScreen hide={hide} koordinat={koordinat} allData={allDataSelected} pinClickHandle={pinClickHandle}/>
       {isDetailReport && <DetailReport closeDetailReport={closeDetailReport} data={InputDetailReport} MoreDetailOpen={MoreDetailOpen} />}
       {isMoreDetailReport && <MoreDetailReport closeMoreDetailReport={closeMoreDetailReport} data={InputDetailReport}/>}
-      {/* <MoreDetailReport data={InputDetailReport}/> */}
       <ProfileIcon
         isProfile={isProfile}
         toggleEditProfile={toggleEditProfile}
@@ -111,6 +115,8 @@ const HomePage = () => {
         imgprofile={imgprofile}
       />
       {isDataSurvey && <DataSurvey closeDataSurvey={closeDataSurvey} />}
+      {isKurasiSurvey && <KurasiSurvey closeKurasiSurvey={closeKurasiSurvey} />}
+      <DetailKurasiSurvey className="z-50"/>
       <div
         className={`w-1/3 ${
           ismapsOpen ? "h-8" : "h-80"
@@ -122,6 +128,7 @@ const HomePage = () => {
             surveyMenu={surveyMenu}
             isOff={isOff}
             openDataSurvey={openDataSurvey}
+            openKurasiSurvey={openKurasiSurvey}
           />
           <div className={`px-1 w-full h-auto z-50`}>
             <Panel

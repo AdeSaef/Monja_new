@@ -69,29 +69,224 @@ const DetailKurasiSurvey = () => {
   }, []);
 
   return (
-    <div className="h-screen w-screen">
-      <div className="absolute top-6 left-6">
-        <h1 className="text-3xl ml-2 mt-2 font-bold z-50 cursor-pointer">X</h1>
+    <div className="absolute top-0 left-0 h-screen w-screen z-50 overflow-hidden">
+      <div className="absolute top-4 left-4">
+        <h1 className="text-4xl ml-2 mt-2 font-bold z-50 cursor-pointer">X</h1>
       </div>
-      <div className=" bg-green-300 h-full mt-20 select-none flex flex-col">
+      <div className=" bg-white h-full mt-20 select-none flex flex-col">
         <div className="flex w-full h-96">
-          <div className="bg-black w-5/12 h-full flex flex-col justify-center">
-            <div className="bg-white w-full h-24 m-auto">
-              Gambar
+          <div className="bg-black w-5/12 min-h-96 flex flex-col justify-center py-8 mx-3">
+            <div className="w-full h-full">
+              <img
+                className="w-full h-full object-cover"
+                src="https://monitoring.pptik.id/data/road_coba/gambar/GX010361.MP4_11092024_4.jpg"
+                alt="Survey Image"
+              />
             </div>
           </div>
-          <div className="w-2/12 h-full bg-green-200 overflow-y-scroll"></div>
-          <div className="w-5/12 bg-slate-400 h-full"></div>
-        </div>
-        <div className="flex w-full h-96">
-          <div className="w-5/12 h-full flex flex-col">
-            <div className="flex w-full h-24 bg-slate-300 p-1">
-              <div className="bg-white h-full w-1/2"></div>
-              <div className="bg-white h-full w-1/2"></div>
+          <div className="w-2/12 bg-white h-96 overflow-hidden overflow-y-scroll flex flex-col scrollbar-thin">
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+20</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
             </div>
-            <div className="flex w-full h-24 bg-slate-300 p-1">
-              <div className="bg-white h-full w-1/2"></div>
-              <div className="bg-white h-full w-1/2"></div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+50</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+75</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+100</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+150</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+200</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+250</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+300</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+350</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+400</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+450</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+500</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+550</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+600</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+650</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+700</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+750</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+800</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+850</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+900</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+950</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+            <div className="border border-gray w-full min-h-12 flex justify-between px-1">
+              <span className="my-auto">0+1000</span>
+              <div className="bg-green-400 w-16 h-4 rounded-md flex flex-col my-auto text-white text-xs text-center">
+                form terisi
+              </div>
+            </div>
+          </div>
+          <div className="w-5/12 bg-white h-full p-4 pt-2 flex flex-col">
+            <div className="border border-gray-300 border-t-0 h-full flex flex-col p-3">
+              <span className="text-xl font-bold">Detail Survey</span>
+              <div className="w-full h-auto border border-gray-300 p-4">
+                <div className="border-t-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">Surveyor</div>
+                  <div className="border-2 w-full h-auto px-2">John Doe</div>
+                </div>
+                <div className="border-t-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">
+                    Tanggal Survey
+                  </div>
+                  <div className="border-2 w-full h-auto px-2">2022-01-01</div>
+                </div>
+                <div className="border-t-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">Uploader</div>
+                  <div className="border-2 w-full h-auto px-2">Jane Doe</div>
+                </div>
+                <div className="border-t-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">
+                    Tanggal Upload
+                  </div>
+                  <div className="border-2 w-full h-auto px-2">2022-01-02</div>
+                </div>
+                <div className="border-t-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">Station</div>
+                  <div className="border-2 w-full h-auto px-2">10</div>
+                </div>
+                <div className="border-y-2 w-full h-auto flex p-1">
+                  <div className="w-1/2 h-auto font-semibold">Kilometer</div>
+                  <div className="border-2 w-full h-auto px-2">10.5</div>
+                </div>
+              </div>
+            </div>
+            <div className="border border-gray-300 border-b-0 w-full h-auto p-3 mt-3 flex justify-center">
+              <div className="bg-green-500 w-20 h-auto rounded-md text-white text-center select-none hover:bg-green-600">
+                Detail
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex w-full h-auto">
+          <div className="mx-3 w-5/12 flex flex-wrap overflow-y-scroll scrollbar-thin">
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
+            </div>
+            <div className="flex w-1/2 h-24 bg-slate-300 p-1">
+              <div className="bg-white h-full w-full"></div>
             </div>
           </div>
           <div className="w-1/2 h-full"></div>

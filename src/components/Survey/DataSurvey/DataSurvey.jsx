@@ -4,7 +4,54 @@ import { useHomePageLogic } from "../../../services/homepage";
 import { Validation } from "../../../services/verifikasi_data";
 import { getSurveyData } from "../../../services/surveyService";
 import { FaArrowRightLong } from "react-icons/fa6";
-import DetailDataSurvey from "./DetailDataSurvey";
+// import DetailDataSurvey from "./DetailDataSurvey";
+import { getSurveybyId } from "../../../services/surveyService";
+
+const DetailTable = ({ data }) => {
+  console.log(data);
+  return (
+    <div className="container mx-auto p-0 z-50">
+      <table className="min-w-full bg-white border">
+        <thead>
+          <tr>
+            <th className="py-2 border">No.</th>
+            <th className="py-2 border">GUID Survey</th>
+            <th className="py-2 border">GUID Ruas</th>
+            <th className="py-2 border">Ruas</th>
+            <th className="py-2 border">Nama File Video</th>
+            <th className="py-2 border">Surveyor</th>
+            <th className="py-2 border">Tanggal Survey</th>
+            <th className="py-2 border">Uploader</th>
+            <th className="py-2 border">Tanggal Upload</th>
+            <th className="py-2 border">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((survey, index) => (
+            <tr key={index} className="text-center border-b">
+              <td className="py-2 border">{index + 1}</td>
+              <td className="py-2 border">{survey.guid_survey}</td>
+              <td className="py-2 border">{survey.guid_rute}</td>
+              <td className="py-2 border">{survey.rute}</td>
+              <td className="py-2 border">{survey.namafiles}</td>
+              <td className="py-2 border">{survey.surveyor}</td>
+              <td className="py-2 border">{survey.tanggal_survey}</td>
+              <td className="py-2 border">{survey.uploader || "-"}</td>
+              <td className="py-2 border">{survey.tanggal_upload || "-"}</td>
+              <td
+                className={`py-2 border ${
+                  survey.status === "belum upload" ? "bg-red-500" : "bg-green-500"
+                } rounded-xl`}
+              >
+                {survey.status}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 const SurveyTable = ({ data, onDetail }) => (
   <div className="overflow-x-auto z-50">
@@ -67,22 +114,32 @@ const DataSurvey = ({closeDataSurvey}) => {
   } = useHomePageLogic();
 
 
-
-  const [detailDataSurvey, setDetailDataSurvey] = useState(false);
+  
+  const [detailDataSurvey, setDetailDataSurvey] = useState([]);
+  const [IsdetailDataSurvey, setIsDetailDataSurvey] = useState(false);
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
   const [dataSurvey, setDataSurvey] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
 
   const handleDetailDataSurvey = (id) => {
-    setSelectedSurveyId(id);
-    setDetailDataSurvey(true);
-    console.log("clicked", selectedSurveyId,"and", detailDataSurvey)
+    fetchSurveyDetailData(id);
+    // setIsDetailDataSurvey(true);
+    console.log("clicked",id,"and", IsdetailDataSurvey)
   };
 
   const closeDetailDataSurvey = () => {
-    setDetailDataSurvey(false);
+    setIsDetailDataSurvey(false);
     setSelectedSurveyId(null);
+  };
+
+  const fetchSurveyDetailData = async (surveyId) => {
+    try {
+      const surveyDetail = await getSurveybyId(surveyId);
+      setDetailDataSurvey([surveyDetail]);
+    } catch (error) {
+      console.error("Error fetching survey data:", error);
+    }
   };
 
   const backPage = () => {
@@ -107,7 +164,6 @@ const DataSurvey = ({closeDataSurvey}) => {
       setDataSurvey(survey.data);
       setTotalPages(survey.totalPage);
       setCurrentPage(survey.page);
-      console.log(survey.data);
     } catch (error) {
       console.error("Error fetching survey data:", error);
     }
@@ -115,13 +171,14 @@ const DataSurvey = ({closeDataSurvey}) => {
 
   useEffect(() => {
     fetchSurvey(currentPage);
-    setDetailDataSurvey(false);
+    // fetchSurveyDetailData('8cf22e2a-c6db-49f4-870e-2619ecbdc8e8');
+    // setDetailDataSurvey(false);
   }, []);
 
   return (
     <div className="fixed h-screen w-screen" onClick={closeDataSurvey}>
       <div className="h-full mt-9 select-none flex flex-col">
-        <div className="absolute bg-black opacity-80 top-9 left-0 w-full h-full z-50"></div>
+        <div className="absolute bg-black opacity-80 top-9 left-0 w-full h-full z-10"></div>
         <div className="z-50">
           <h1 className="flex justify-center text-3xl w-8 ml-2 mt-2 text-white font-semibold cursor-pointer" onClick={closeDataSurvey}>
             X
@@ -141,8 +198,12 @@ const DataSurvey = ({closeDataSurvey}) => {
               <FaArrowRightLong className="text-white w-full h-full" />
             </div>
           </div>
+          {/* <div className="border-4 border-gray-600 rounded-3xl h-auto overflow-clip w-full flex flex-col">
+            <DetailTable data={detailDataSurvey} className="w-full z-50" />
+          </div> */}
           <div className="border-4 border-gray-600 rounded-3xl h-auto overflow-clip w-full flex flex-col">
-            <SurveyTable data={dataSurvey} onDetail={handleDetailDataSurvey} />
+            <DetailTable data={detailDataSurvey} className="w-full z-50" />
+            {/* <SurveyTable data={dataSurvey} onDetail={handleDetailDataSurvey} /> */}
           </div>
           <div className="w-1/12 flex flex-col justify-center">next</div>
         </div>
@@ -167,7 +228,7 @@ const DataSurvey = ({closeDataSurvey}) => {
           </div>
         </div> */}
       </div>
-      {detailDataSurvey && <DetailDataSurvey onClose={closeDetailDataSurvey} surveyId={selectedSurveyId} />}
+      {/* {detailDataSurvey && <DetailDataSurvey onClose={closeDetailDataSurvey} surveyId={selectedSurveyId} />} */}
     </div>
   );
 };

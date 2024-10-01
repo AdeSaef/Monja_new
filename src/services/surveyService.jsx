@@ -3,7 +3,6 @@ import { serverApi } from "../api/axios";
 export const getSurveyData = async (page) => {
   try {
     const surveyData = await serverApi.get(`/survey/get?page=${page}`);
-    console.log(surveyData);
     if (surveyData.data.success) {
       return surveyData.data;
     } else {

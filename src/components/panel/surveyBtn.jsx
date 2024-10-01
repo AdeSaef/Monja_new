@@ -1,7 +1,7 @@
 import { useState } from "react";
 import tunnel from "../../assets/tunnel.png";
 
-const SurveyBtn = ({isOff, isRotated, surveyMenu, openDataSurvey}) => {
+const SurveyBtn = ({isOff, isRotated, surveyMenu, openDataSurvey, openKurasiSurvey}) => {
     return(
         <>
         <div
@@ -12,7 +12,7 @@ const SurveyBtn = ({isOff, isRotated, surveyMenu, openDataSurvey}) => {
             <div className="border select-none text-center whitespace-nowrap p-1 bg-white cursor-pointer" onClick={openDataSurvey}>
               Data Survey
             </div>
-            <div className="border select-none border-t-0 text-center whitespace-nowrap p-1 bg-white">
+            <div className="border select-none border-t-0 text-center whitespace-nowrap p-1 bg-white cursor-pointer" onClick={openKurasiSurvey}>
               Kurasi Survey
             </div>
           </div>

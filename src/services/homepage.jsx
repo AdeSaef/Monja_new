@@ -14,6 +14,7 @@ export const useHomePageLogic = () => {
   const [isSetting, setIsSetting] = useState(false);
   const [ismapsOpen, setmapsOpen] = useState(false);
   const [isDataSurvey, setIsDataSurvey] = useState(false);
+  const [isKurasiSurvey, setIsKurasiSurvey] = useState(false);
   const [isrouteOpen, setrouteOpen] = useState(true);
   const [issurveyOpen, setsurveyOpen] = useState(true);
   const [InputDetailReport, setDetailReport] = useState({});
@@ -30,6 +31,16 @@ export const useHomePageLogic = () => {
   }
   const closeDataSurvey = ()=>{
     setIsDataSurvey(false);
+    setmapsOpen(false);
+  }
+  const openKurasiSurvey = ()=>{
+    setmapsOpen(true);
+    setIsKurasiSurvey(true);
+    surveyMenu();
+  }
+  const closeKurasiSurvey = ()=>{
+    setIsKurasiSurvey(false);
+    setmapsOpen(false);
   }
 
   const surveyMenu = () => {
@@ -144,6 +155,7 @@ export const useHomePageLogic = () => {
     isrouteOpen,
     issurveyOpen,
     isDataSurvey,
+    isKurasiSurvey,
     InputDetailReport,
     isDetailReport,
     isMoreDetailReport,
@@ -164,8 +176,10 @@ export const useHomePageLogic = () => {
     setrouteOpen,
     setsurveyOpen,
     openDataSurvey,
+    openKurasiSurvey,
     setIsDataSurvey,
     closeDataSurvey,
+    closeKurasiSurvey,
     pinClickHandle,
     closeDetailReport,
     closeMoreDetailReport,

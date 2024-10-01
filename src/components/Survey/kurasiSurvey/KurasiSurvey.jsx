@@ -8,7 +8,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 
 
-const KurasiSurvey = () => {
+const KurasiSurvey = ({closeKurasiSurvey}) => {
   if (!Validation()) {
     return <Navigate to="/login" />;
   }
@@ -71,10 +71,10 @@ const KurasiSurvey = () => {
   }, []);
 
   return (
-    <div className="h-screen w-screen">
-      <div className=" bg-green-300 h-full mt-20 select-none flex flex-col">
-        <div>
-          <h1 className="text-3xl ml-2 mt-2 text-white font-semibold z-50 cursor-pointer">
+    <div className="absolute top-0 left-0 h-screen w-screen overflow-hidden z-50">
+      <div className="h-full mt-10 select-none flex flex-col">
+        <div className="flex justify-between z-50">
+          <h1 className="text-3xl ml-2 mt-2 text-white font-semibold z-50 cursor-pointer" onClick={closeKurasiSurvey}>
             X
           </h1>
         </div>
@@ -85,7 +85,7 @@ const KurasiSurvey = () => {
             <div className="bg-slate-600 px-1 py-0">Kurasi Survey</div>
           </div>
         </div>
-        <div className="flex flex-col w-6/12 mx-auto overflow-y-scroll">
+        <div className="flex flex-col mb-10 w-6/12 mx-auto overflow-y-scroll">
           <div className="bg-blue-600 flex flex-col w-full h-auto p-1 my-1">
             <p className="text-white mx-3">Nama Rute</p>
             <div className="bg-white p-3">
@@ -138,6 +138,7 @@ const KurasiSurvey = () => {
             </div>
           </div>
         </div>
+        <div className="absolute bg-black opacity-50 h-full w-full -z-30"></div>
 
         {/* <div className="flex justify-end my-5">
           <div className={`flex flex-col justify-center ${currentPage === 1 ? "hidden" : ""}`}>

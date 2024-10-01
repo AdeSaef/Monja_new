@@ -120,7 +120,7 @@ const DetailProfile = ({
         onClick={toggleDetailProfile}
       />
       <div className="relative">
-        <div className="w-1/3 h-auto mx-auto rounded-full border-4 border-white overflow-hidden select-none flex items-center">
+        <div className="w-1/3 h-auto mx-auto overflow-hidden select-none flex items-center">
           <img
             src={imageProfile}
             alt="Profile"
