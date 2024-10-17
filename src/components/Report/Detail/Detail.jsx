@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { updateDetailReport } from "../../../services/reportServices";
 
-export const Detail = ({ data, onUpdate }) => {
+export const Detail = ({ data }) => {
   const [formData, setFormData] = useState({
     surveyor: data.surveyor,
     tanggal_survey: data.tanggal_survey,
@@ -12,14 +13,25 @@ export const Detail = ({ data, onUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Convert 'station' and 'kilometer' to number before saving
+    const convertedValue = (name === 'station' || name === 'kilometer') 
+      ? parseFloat(value)
+      : value;
+
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: convertedValue,
     });
   };
 
-  const handleSubmit = () => {
-    onUpdate(formData);
+  const handleSubmit = async () => {
+    console.log("form :",formData);
+    try {
+      await updateDetailReport(data.id, formData);
+    } catch (error) {
+      console.error("Error updating report:", error);
+    }
   };
 
   return (
@@ -64,6 +76,7 @@ export const Detail = ({ data, onUpdate }) => {
         <div className="w-1/2 h-full font-semibold">Station</div>
         <input
           className="border-2 w-full h-auto p-2"
+          type="number" 
           name="station"
           value={formData.station}
           onChange={handleChange}
@@ -73,6 +86,7 @@ export const Detail = ({ data, onUpdate }) => {
         <div className="w-1/2 h-full font-semibold">Kilometer</div>
         <input
           className="border-2 w-full h-auto p-2"
+          type="number" 
           name="kilometer"
           value={formData.kilometer}
           onChange={handleChange}

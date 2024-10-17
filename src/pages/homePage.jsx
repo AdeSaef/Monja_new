@@ -33,6 +33,7 @@ const HomePage = () => {
     InputDetailReport,
     isDataSurvey,
     isKurasiSurvey,
+    isDetailKurasiSurvey,
     koordinatSelected,
     allDataSelected,
     isDetailReport,
@@ -49,6 +50,9 @@ const HomePage = () => {
     surveyOpen,
     openDataSurvey,
     openKurasiSurvey,
+    setIsDetailKurasiSurvey,
+    switchDataSurvey,
+    switchKurasiSurvey,
     closeDataSurvey,
     closeKurasiSurvey,
     ambilInput,
@@ -58,6 +62,8 @@ const HomePage = () => {
     MoreDetailOpen,
   } = useHomePageLogic();
   const [koordinat, setKoordinat] = useState([]);
+  const [idKurasi, setId] = useState();
+  const [guidKurasi, setGuidKurasi] = useState();
 
   // useEffect(() => {
   //   console.log("selected homepage :", koordinatSelected);
@@ -69,6 +75,7 @@ const HomePage = () => {
 
   const [imgprofile, setProfile] = useState(null);
   const [profile, setProfileData] = useState({});
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -114,9 +121,10 @@ const HomePage = () => {
         profile={profile}
         imgprofile={imgprofile}
       />
-      {isDataSurvey && <DataSurvey closeDataSurvey={closeDataSurvey} />}
-      {isKurasiSurvey && <KurasiSurvey closeKurasiSurvey={closeKurasiSurvey} />}
-      <DetailKurasiSurvey className="z-50"/>
+      {isDataSurvey && <DataSurvey closeDataSurvey={closeDataSurvey} switchKurasiSurvey={switchKurasiSurvey}/>}
+      {isKurasiSurvey && <KurasiSurvey closeKurasiSurvey={closeKurasiSurvey} switchDataSurvey={switchDataSurvey} openDetailSurvey={setIsDetailKurasiSurvey} setGuid={setGuidKurasi} setId={setId}/>}
+      {/* <DetailKurasiSurvey/> */}
+      {isDetailKurasiSurvey && <DetailKurasiSurvey className="z-50" setDetail={setIsDetailKurasiSurvey} guidsurvey={guidKurasi} idKurasi={idKurasi} MoreDetailOpen={MoreDetailOpen} closeKurasiSurvey={closeKurasiSurvey}/>}
       <div
         className={`w-1/3 ${
           ismapsOpen ? "h-8" : "h-80"

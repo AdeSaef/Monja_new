@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { getImage } from "../../services/reportServices";
 import { Detail } from "./Detail/Detail";
 import { Kekerasan } from "./Detail/Kekerasan";
 import { Retakan } from "./Detail/Retakan";
@@ -8,7 +7,6 @@ import { BahuSaluran } from "./Detail/BahuSaluran";
 import { KondisiJalan } from "./Detail/KondisiJalan";
 
 const MoreDetailReport = ({ data, closeMoreDetailReport }) => {
-  const [imageURL, setImageSrc] = useState(""); // Menggunakan imageURL sebagai variabel state
   const [onDetail, setOnDetail] = useState(true);
   const [onKekerasan, setOnKekerasan] = useState(false);
   const [onRetakan, setOnRetakan] = useState(false);

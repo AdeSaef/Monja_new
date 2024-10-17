@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import LeafletMap from "./addMap";
 import { lokalApi, serverApi } from "../../../api/axios";
 
-const TambahRute = ({ closeAdd }) => {
+const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
   const [formData, setFormData] = useState({
     NO_RUAS: "",
     NAMA_RUAS_JALAN: "",
@@ -44,7 +44,9 @@ const TambahRute = ({ closeAdd }) => {
 
       if (response.data.success) {
         alert(response.data.message);
-        // Navigasi ke halaman lain jika diperlukan
+        setDataRute([]);
+        closeAdd();
+        fetchRute(currentPage);
       } else {
         alert(response.data.message);
       }
@@ -114,9 +116,9 @@ const TambahRute = ({ closeAdd }) => {
             </div>
           </form>
           <div className="w-full h-auto flex justify-center">
-            <div className="mx-6 h-full w-full">
-              <div className="App">
-                <LeafletMap onAddPosition={handleAddPosition} />
+            <div className="ml-4 mr-0 h-full w-full">
+              <div>
+                <LeafletMap onAddPosition={handleAddPosition} editable={true}/>
               </div>
             </div>
           </div>

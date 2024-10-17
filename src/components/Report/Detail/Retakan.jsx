@@ -2,6 +2,7 @@ import { useState } from "react";
 import unchecked from "../../../assets/Unchecked.png";
 import checked from "../../../assets/Checked.png";
 import { useEffect } from "react";
+import { updateFormSurvey } from "../../../services/reportServices";
 
 export const Retakan = ({ data, onUpdate }) => {
   const [Jenis, setJenis] = useState(1);
@@ -70,12 +71,16 @@ export const Retakan = ({ data, onUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedData = {
-      TYPE: Jenis,
-      LARGE: Lebar,
-      WIDE: Luas,
+      CRACKS: {
+        TYPE: formData.TYPE,
+        LARGE: formData.LARGE,
+        WIDE: formData.WIDE,
+      },
     };
-    onUpdate(updatedData);
+    
+    updateFormSurvey(data.id,updatedData);
   };
+  
 
   const handleJenisClick = (value) => {
     setJenis(value);

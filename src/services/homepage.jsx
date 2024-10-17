@@ -15,6 +15,7 @@ export const useHomePageLogic = () => {
   const [ismapsOpen, setmapsOpen] = useState(false);
   const [isDataSurvey, setIsDataSurvey] = useState(false);
   const [isKurasiSurvey, setIsKurasiSurvey] = useState(false);
+  const [isDetailKurasiSurvey, setIsDetailKurasiSurvey] = useState(false);
   const [isrouteOpen, setrouteOpen] = useState(true);
   const [issurveyOpen, setsurveyOpen] = useState(true);
   const [InputDetailReport, setDetailReport] = useState({});
@@ -25,10 +26,20 @@ export const useHomePageLogic = () => {
   const [notFound, setNotFound] = useState(false);
 
   const openDataSurvey = ()=>{
-    setmapsOpen(true);
     setIsDataSurvey(true);
+    setIsDetailReport(false);
+    closeKurasiSurvey();
+    setmapsOpen(true); 
     surveyMenu();
   }
+
+  const switchDataSurvey = ()=>{
+    setIsDataSurvey(true);
+    setIsDetailReport(false);
+    closeKurasiSurvey();
+    setmapsOpen(true); 
+  }
+  
   const closeDataSurvey = ()=>{
     setIsDataSurvey(false);
     setmapsOpen(false);
@@ -36,10 +47,17 @@ export const useHomePageLogic = () => {
   const openKurasiSurvey = ()=>{
     setmapsOpen(true);
     setIsKurasiSurvey(true);
+    closeDataSurvey();
     surveyMenu();
+  }
+  const switchKurasiSurvey = ()=>{
+    setmapsOpen(true);
+    setIsKurasiSurvey(true);
+    closeDataSurvey();
   }
   const closeKurasiSurvey = ()=>{
     setIsKurasiSurvey(false);
+    setIsDetailKurasiSurvey(false);
     setmapsOpen(false);
   }
 
@@ -115,7 +133,6 @@ export const useHomePageLogic = () => {
     try {
       const fetchkoordinat = await getDetailSurvey(id);
       const allData = fetchkoordinat;
-      console.log("alldata :",allData);
       setDetailReport(allData);
     } catch (error) {
       console.log("Error fetching koordinat:", error);
@@ -156,6 +173,7 @@ export const useHomePageLogic = () => {
     issurveyOpen,
     isDataSurvey,
     isKurasiSurvey,
+    isDetailKurasiSurvey,
     InputDetailReport,
     isDetailReport,
     isMoreDetailReport,
@@ -177,7 +195,10 @@ export const useHomePageLogic = () => {
     setsurveyOpen,
     openDataSurvey,
     openKurasiSurvey,
+    setIsDetailKurasiSurvey,
     setIsDataSurvey,
+    switchDataSurvey,
+    switchKurasiSurvey,
     closeDataSurvey,
     closeKurasiSurvey,
     pinClickHandle,

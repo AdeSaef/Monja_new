@@ -23,7 +23,6 @@ export const getRuteData = async (page) => {
 export const getRuteName = async () => { 
   try {
     const ruteData = await serverApi.get(`/rute/get/company?keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
-    // console.log(ruteData.data)
     
     if (ruteData.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
       return ruteData.data; // Data rute;

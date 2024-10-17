@@ -8,7 +8,11 @@ import DetailRute from "./detailRute";
 import EditRute from "./editRute";
 import DeleteRute from "./deleteRute";
 import navigation from "../../../assets/button/navigation.png";
-import { getRuteData, getRuteDetail, deleteRutebyGuid } from "../../../services/ruteService";
+import {
+  getRuteData,
+  getRuteDetail,
+  deleteRutebyGuid,
+} from "../../../services/ruteService";
 
 const ManajemenRoute = () => {
   if (!Validation()) {
@@ -32,8 +36,8 @@ const ManajemenRoute = () => {
   const [detailRuteData, setDetailRute] = useState({});
   const [guidSelected, setGuid] = useState("");
   const [Deleterute, setDelete] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10); // Misalnya default 10 halaman
+  const [currentPage, setCurrentPage] = useState(34);
+  const [totalPages, setTotalPages] = useState(10);
 
   const closeAdd = () => {
     setAddrute(false);
@@ -57,7 +61,7 @@ const ManajemenRoute = () => {
   };
 
   const openDelete = (guid) => {
-    console.log("delete select :",guid)
+    console.log("delete select :", guid);
     setGuid(guid);
     setDelete(true);
   };
@@ -65,6 +69,8 @@ const ManajemenRoute = () => {
   const confirmDelete = () => {
     deleteRute(guidSelected);
     setGuid("");
+    setDataRute([]);
+    fetchRute(currentPage);
     setDelete(false);
   };
 
@@ -74,35 +80,32 @@ const ManajemenRoute = () => {
   };
 
   const openEdit = (guid) => {
-    console.log("guid edit :", guid)
+    console.log("guid edit :", guid);
     detailRute(guid);
     setEditrute(true);
   };
-  const handleSave = (formData) =>{
-    console.log("saved : ",formData)
-  }
+  const handleSave = (formData) => {
+    console.log("saved : ", formData);
+  };
 
   const fetchRute = async (page) => {
     try {
       const result = await getRuteData(page);
-      // console.log("API Response:", result.data); // Debug log untuk memeriksa respons API
-      // console.log("API Response page:", result.data.totalPage); // Debug log untuk memeriksa respons API
-  
+
       if (result) {
-        setDataRute(result.data.data || []); // Menyimpan data rute
-        setCurrentPage(result.data.page || 1); // Menyimpan halaman saat ini
-        setTotalPages(result.data.totalPage || 1); // Menyimpan total halaman
-        // console.log("Total pages set to:", result.data.totalPage); // Debug log
+        setDataRute(result.data.data || []);
+        setCurrentPage(result.data.page || 1);
+        setTotalPages(result.data.totalPage || 1);
       }
     } catch (error) {
       console.error("Error fetching rute data:", error);
     }
   };
-  
+
   const detailRute = async (guid) => {
     try {
       const result = await getRuteDetail(guid);
-  
+
       if (result) {
         setDetailRute(result); // Menyimpan data rute ke state
         console.log("Data rute detail yang diterima:", result);
@@ -114,15 +117,15 @@ const ManajemenRoute = () => {
   const deleteRute = async (guid) => {
     try {
       const result = await deleteRutebyGuid(guid);
-  
+
       if (result) {
-        console.log("Data berhasil dihapus :", result);
+        alert("Rute berhasil dihapus");
+        window.location.reload(true);
       }
     } catch (error) {
       console.error("Error fetching rute data:", error);
     }
   };
-  
 
   useEffect(() => {
     setmapsOpen(true);
@@ -186,7 +189,7 @@ const ManajemenRoute = () => {
           </div>
         </div>
       </div>
-      {Addrute && <TambahRute closeAdd={closeAdd} />}
+      {Addrute && <TambahRute closeAdd={closeAdd} fetchRute={fetchRute} setDataRute={setDataRute} currentPage={currentPage}/>}
       {Detailrute && (
         <DetailRute routeDetail={detailRuteData} closeDetail={closeDetail} />
       )}

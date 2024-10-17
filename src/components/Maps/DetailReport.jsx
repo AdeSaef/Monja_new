@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getImage } from "../../services/reportServices";
 
 const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
   // const [imageURL, setImageSrc] = useState(null);

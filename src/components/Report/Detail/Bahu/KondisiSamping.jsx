@@ -2,8 +2,9 @@ import checked from "../../../../assets/Checked.png";
 import unchecked from "../../../../assets/Unchecked.png";
 import arrow from "../../../../assets/button/arrow.png";
 import { useState, useEffect } from "react";
+import { updateFormSurvey } from "../../../../services/reportServices";
 
-export const SaluranSamping = ({data, onLereng, onBahu, onUpdate}) => {
+export const SaluranSamping = ({data, onLereng, onBahu }) => {
   const [Kiri, setKiri] = useState(1);
   const [Kanan, setKanan] = useState(1);
   const moreData = data.FORM_SURVEY;
@@ -26,11 +27,20 @@ export const SaluranSamping = ({data, onLereng, onBahu, onUpdate}) => {
   }, [moreData])
 
   const handleUpdate = () => {
-    const updatedData = {
-      LEFT_CHANNEL_SIDE_CONDITION: Kiri,
-      RIGHT_CHANNEL_SIDE_CONDITION: Kanan,
+    const KBahuMapping = {
+      1: "Tidak ada",
+      2: "Bersih",
+      3: "Tertutup/Tersumbat",
+      4: "Erosi",
     };
-    onUpdate(updatedData);
+  
+    const updatedData = {
+      SHOULDER_CHANNEL_SIDE: {
+        LEFT_CHANNEL_SIDE_CONDITION: KBahuMapping[Kiri],
+        RIGHT_CHANNEL_SIDE_CONDITION: KBahuMapping[Kanan],
+      },
+    };
+    updateFormSurvey(data.id,updatedData);
   };
 
   return (

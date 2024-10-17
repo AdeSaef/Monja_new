@@ -11,8 +11,9 @@ export const serverApi = axios.create({
 
 // api lokal
 export const lokalApi = axios.create({
-    baseURL: 'http://192.168.10.107:5092/',
+    baseURL: 'http://192.168.10.194:5092/',
 });
+
 // export const lokalApi = axios.create({
 //     baseURL: 'http://localhost:5092/',
 // });

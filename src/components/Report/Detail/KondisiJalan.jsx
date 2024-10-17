@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { updateFormSurvey } from "../../../services/reportServices";
 
 export const KondisiJalan = ({ data, onUpdate }) => {
   const [Kondisi, setKondisi] = useState("");
@@ -19,7 +20,15 @@ export const KondisiJalan = ({ data, onUpdate }) => {
   }, [data.FORM_SURVEY.PANJANG_KONDISI.BAIK, data.FORM_SURVEY.PANJANG_KONDISI.SEDANG])
 
   const handleUpdate = () => {
-    onUpdate(Kondisi);
+    const updatedData ={
+      PANJANG_KONDISI:{
+        BAIK: Kondisi === "BAIK" ? 25 : 0,
+        SEDANG: Kondisi === "SEDANG" ? 25 : 0,
+        RUSAK_RINGAN: Kondisi === "RUSAK_RINGAN" ? 25 : 0,
+        RUSAK_BERAT: Kondisi === "RUSAK_BERAT" ? 25 : 0
+      }
+    };
+    updateFormSurvey(data.id,updatedData);
   };
 
   return (

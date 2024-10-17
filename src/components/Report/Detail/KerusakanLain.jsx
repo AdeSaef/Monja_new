@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import checked from "../../../assets/Checked.png"
-import unchecked from "../../../assets/Unchecked.png"
+import checked from "../../../assets/Checked.png";
+import unchecked from "../../../assets/Unchecked.png";
+import { updateFormSurvey } from "../../../services/reportServices";
 
 export const KerusakanLain = ({ data, onUpdate }) => {
   const [Jumlah, setJumlah] = useState(1);
@@ -81,8 +82,8 @@ export const KerusakanLain = ({ data, onUpdate }) => {
 
     const tepiMap = {
       "Tidak ada": 1,
-      "Ringan": 2,
-      "Berat": 3,
+      Ringan: 2,
+      Berat: 3,
     };
     setTepiKiri(tepiMap[moreData.OTHER_DAMAGE.LEFT_DAMAGE_EDGE] || 1);
     setTepiKanan(tepiMap[moreData.OTHER_DAMAGE.RIGHT_DAMAGE_EDGE] || 1);
@@ -91,13 +92,15 @@ export const KerusakanLain = ({ data, onUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedData = {
-      HOLE_NUMBER: Jumlah,
-      HOLE_SIZE: Ukuran,
-      EX_WHEEL: BekasRoda,
-      LEFT_DAMAGE_EDGE: TepiKiri,
-      RIGHT_DAMAGE_EDGE: TepiKanan,
+      OTHER_DAMAGE: {
+        HOLE_NUMBER: formData.HOLE_NUMBER,
+        HOLE_SIZE: formData.HOLE_SIZE,
+        EX_WHEEL: formData.EX_WHEEL,
+        LEFT_DAMAGE_EDGE: formData.LEFT_DAMAGE_EDGE,
+        RIGHT_DAMAGE_EDGE: formData.RIGHT_DAMAGE_EDGE,
+      },
     };
-    onUpdate(updatedData);
+    updateFormSurvey(data.id,updatedData);
   };
 
   const handleJumlahClick = (value) => {
@@ -180,19 +183,35 @@ export const KerusakanLain = ({ data, onUpdate }) => {
         <div className="w-1/2 h-full">Jumlah Lubang</div>
         <div className="w-full h-auto p-2 flex flex-col">
           <div className="flex items-center">
-            <img src={Jumlah === 1 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleJumlahClick(1)} />
+            <img
+              src={Jumlah === 1 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleJumlahClick(1)}
+            />
             <div>Tidak Ada</div>
           </div>
           <div className="flex items-center">
-            <img src={Jumlah === 2 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleJumlahClick(2)} />
+            <img
+              src={Jumlah === 2 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleJumlahClick(2)}
+            />
             <div>Kurang Dari 10/Km</div>
           </div>
           <div className="flex items-center">
-            <img src={Jumlah === 3 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleJumlahClick(3)} />
+            <img
+              src={Jumlah === 3 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleJumlahClick(3)}
+            />
             <div>10-15/Km</div>
           </div>
           <div className="flex items-center">
-            <img src={Jumlah === 4 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleJumlahClick(4)} />
+            <img
+              src={Jumlah === 4 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleJumlahClick(4)}
+            />
             <div>Lebih dari 50/Km</div>
           </div>
         </div>
@@ -201,23 +220,43 @@ export const KerusakanLain = ({ data, onUpdate }) => {
         <div className="w-1/2 h-full">Ukuran Lubang</div>
         <div className="w-full h-auto p-2 flex flex-col">
           <div className="flex items-center">
-            <img src={Ukuran === 1 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleUkuranClick(1)} />
+            <img
+              src={Ukuran === 1 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleUkuranClick(1)}
+            />
             <div>Tidak Ada</div>
           </div>
           <div className="flex items-center">
-            <img src={Ukuran === 2 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleUkuranClick(2)} />
+            <img
+              src={Ukuran === 2 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleUkuranClick(2)}
+            />
             <div>Kecil - Dangkal</div>
           </div>
           <div className="flex items-center">
-            <img src={Ukuran === 3 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleUkuranClick(3)} />
+            <img
+              src={Ukuran === 3 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleUkuranClick(3)}
+            />
             <div>Kecil - Dalam</div>
           </div>
           <div className="flex items-center">
-            <img src={Ukuran === 4 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleUkuranClick(4)} />
+            <img
+              src={Ukuran === 4 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleUkuranClick(4)}
+            />
             <div>Besar - Dangkal</div>
           </div>
           <div className="flex items-center">
-            <img src={Ukuran === 5 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleUkuranClick(5)} />
+            <img
+              src={Ukuran === 5 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleUkuranClick(5)}
+            />
             <div>Besar - Dalam</div>
           </div>
         </div>
@@ -226,19 +265,35 @@ export const KerusakanLain = ({ data, onUpdate }) => {
         <div className="w-1/2 h-full">Bekas Roda</div>
         <div className="w-full h-auto p-2 flex flex-col">
           <div className="flex items-center">
-            <img src={BekasRoda === 1 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleBekasClick(1)} />
+            <img
+              src={BekasRoda === 1 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleBekasClick(1)}
+            />
             <div>Tidak Ada</div>
           </div>
           <div className="flex items-center">
-            <img src={BekasRoda === 2 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleBekasClick(2)} />
+            <img
+              src={BekasRoda === 2 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleBekasClick(2)}
+            />
             <div>Kurang dari 1cm dalam</div>
           </div>
           <div className="flex items-center">
-            <img src={BekasRoda === 3 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleBekasClick(3)} />
+            <img
+              src={BekasRoda === 3 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleBekasClick(3)}
+            />
             <div>1 - 3 cm dalam</div>
           </div>
           <div className="flex items-center">
-            <img src={BekasRoda === 4 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleBekasClick(4)} />
+            <img
+              src={BekasRoda === 4 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleBekasClick(4)}
+            />
             <div>lebih dari 3 cm</div>
           </div>
         </div>
@@ -251,40 +306,52 @@ export const KerusakanLain = ({ data, onUpdate }) => {
       <div className="border-y-2 w-full h-full flex p-2">
         <div className="w-1/2 h-full ml-4 flex flex-col pl-2">
           <div className="flex items-center">
-            <img src={TepiKiri === 1 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleTepiKiriClick(1)} />
+            <img
+              src={TepiKiri === 1 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKiriClick(1)}
+            />
             <div>Tidak Ada</div>
           </div>
           <div className="flex items-center">
-            <img src={TepiKiri === 2 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleTepiKiriClick(2)} />
+            <img
+              src={TepiKiri === 2 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKiriClick(2)}
+            />
             <div>Ringan</div>
           </div>
           <div className="flex items-center">
-            <img src={TepiKiri === 3 ? checked : unchecked} className="w-4 h-4 mr-1 cursor-pointer" onClick={() => handleTepiKiriClick(3)} />
+            <img
+              src={TepiKiri === 3 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKiriClick(3)}
+            />
             <div>Berat</div>
           </div>
         </div>
         <div className="w-1/2 h-full ml-4 flex flex-col pl-2">
-         <div className="flex items-center">
-            <img 
-              src={TepiKanan === 1 ? checked : unchecked} 
-              className="w-4 h-4 mr-1 cursor-pointer" 
-              onClick={() => handleTepiKananClick(1)} 
+          <div className="flex items-center">
+            <img
+              src={TepiKanan === 1 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKananClick(1)}
             />
             <div>Tidak Ada</div>
           </div>
           <div className="flex items-center">
-            <img 
-              src={TepiKanan === 2 ? checked : unchecked} 
-              className="w-4 h-4 mr-1 cursor-pointer" 
-              onClick={() => handleTepiKananClick(2)} 
+            <img
+              src={TepiKanan === 2 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKananClick(2)}
             />
             <div>Ringan</div>
           </div>
           <div className="flex items-center">
-            <img 
-              src={TepiKanan === 3 ? checked : unchecked} 
-              className="w-4 h-4 mr-1 cursor-pointer" 
-              onClick={() => handleTepiKananClick(3)} 
+            <img
+              src={TepiKanan === 3 ? checked : unchecked}
+              className="w-4 h-4 mr-1 cursor-pointer"
+              onClick={() => handleTepiKananClick(3)}
             />
             <div>Berat</div>
           </div>
@@ -301,4 +368,3 @@ export const KerusakanLain = ({ data, onUpdate }) => {
     </>
   );
 };
-

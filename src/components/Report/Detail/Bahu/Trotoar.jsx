@@ -3,7 +3,7 @@ import checked from "../../../../assets/Checked.png";
 import unchecked from "../../../../assets/Unchecked.png";
 import arrow from "../../../../assets/button/arrow.png";
 
-export const Trotoar = ({ data, onLereng, onUpdate }) => {
+export const Trotoar = ({ data, onLereng }) => {
   const [Kiri, setKiri] = useState(1);
   const [Kanan, setKanan] = useState(1);
   const moreData = data.FORM_SURVEY;
@@ -25,9 +25,16 @@ export const Trotoar = ({ data, onLereng, onUpdate }) => {
   }, [moreData]);
 
   const handleUpdate = () => {
+    const KBahuMapping = {
+      1: "Tidak ada",
+      2: "Baik/Aman",
+      3: "Berbahaya",
+    };
     const updatedData = {
-      SIDEWALK_LEFT: Kiri,
-      SIDEWALK_RIGHT: Kanan,
+      SHOULDER_CHANNEL_SIDE: {
+        LEFT_SHOULDER_CONDITION: KBahuMapping[Kiri],
+        RIGHT_SHOULDER_CONDITION: KBahuMapping[Kanan],
+      },
     };
     onUpdate(updatedData);
   };

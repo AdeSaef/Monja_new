@@ -1,4 +1,5 @@
 import { RxCross2 } from "react-icons/rx";
+import LeafletMap from "./addMap";
 
 const DetailRute = ({ routeDetail, closeDetail }) => {
   if (!routeDetail) return null; // Jangan tampilkan apa pun jika routeDetail tidak ada
@@ -7,13 +8,13 @@ const DetailRute = ({ routeDetail, closeDetail }) => {
   const {
     NO_RUAS: noRuas,
     GUID: guid,
+    RUAS: ruas,
     NAMA_RUAS_JALAN: namaRuasJalan,
     KECAMATAN_YANG_DILALUI: kecamatanYangDilalui,
     KETERANGAN: keterangan,
   } = routeDetail;
 
-  // Ruas diatur sebagai nilai string statis untuk contoh ini
-  const ruas = "ruas(jarak) tidak ada";
+
 
   return (
     <div
@@ -34,12 +35,12 @@ const DetailRute = ({ routeDetail, closeDetail }) => {
           </button>
         </div>
         <div className="flex w-full h-full">
-          <form className="mt-4 w-full mr-2">
+          <div className="mt-4 w-full mr-2">
             {[
               { field: "noRuas", label: "No. Ruas", value: noRuas },
               { field: "guid", label: "GUID", value: guid },
               { field: "namaRuasJalan", label: "Nama Ruas Jalan", value: namaRuasJalan },
-              { field: "ruas", label: "Ruas", value: ruas },
+              // { field: "ruas", label: "Ruas", value: ruas ? ruas : "tidak ada" },
               {
                 field: "kecamatanYangDilalui",
                 label: "Kecamatan yang Dilalui",
@@ -58,7 +59,10 @@ const DetailRute = ({ routeDetail, closeDetail }) => {
                 />
               </div>
             ))}
-          </form>
+          </div>
+          <div className="w-full">
+            <LeafletMap coord={ruas} editable={false}/>
+          </div>
         </div>
       </div>
     </div>

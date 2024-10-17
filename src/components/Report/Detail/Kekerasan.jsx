@@ -2,7 +2,8 @@ import { useState } from "react";
 import unchecked from "../../../assets/Unchecked.png"
 import checked from "../../../assets/Checked.png"
 import { useEffect } from "react";
-export const Kekerasan = ({ data, onUpdate }) => {
+import { updateFormSurvey } from "../../../services/reportServices";
+export const Kekerasan = ({ data }) => {
   const [Order, setOrder] = useState(1);
   const [Condition, setCondition] = useState(1);
   const [Decrease, setDecrease] = useState(1);
@@ -79,16 +80,23 @@ export const Kekerasan = ({ data, onUpdate }) => {
     setPatches(patchesMap[moreData.SURFACE_HARDNESS.PATCHES] || 1);
   }, [moreData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedData = {
-      ORDER: Order,
-      CONDITION: Condition,
-      DECREASE: Decrease,
-      PATCHES: Patches,
+      SURFACE_HARDNESS: {
+        ORDER: formData.ORDER,
+        CONDITION: formData.CONDITION,
+        DECREASE: formData.DECREASE,
+        PATCHES: formData.PATCHES,
+      }
     };
-    onUpdate(updatedData);
+    try {
+      await updateFormSurvey(data.id, updatedData);
+    } catch (error) {
+      console.error("Error updating report:", error);
+    }
   };
+  
 
   const handleOrderClick = (value) => {
     setOrder(value);

@@ -2,6 +2,7 @@ import checked from "../../../../assets/Checked.png";
 import unchecked from "../../../../assets/Unchecked.png";
 import arrow from "../../../../assets/button/arrow.png";
 import { useState, useEffect } from "react";
+import { updateFormSurvey } from "../../../../services/reportServices";
 
 export const PermukaanBahu = ({data, onSaluran, onKondisi}) => {
   const [Kiri, setKiri] = useState(1);
@@ -28,11 +29,21 @@ export const PermukaanBahu = ({data, onSaluran, onKondisi}) => {
   }, [moreData])
 
   const handleUpdate = () => {
-    const updatedData = {
-      LEFT_SHOULDER_SURFACE: Kiri,
-      RIGHT_SHOULDER_SURFACE: Kanan,
+    const PBahuMapping = {
+      1: "Tidak ada",
+      2: "Diatas permukaan Jalan",
+      3: "Rata dgn. Permukaan Jalan",
+      4: "Dibawah permukaan Jalan",
+      5: ">10 cm dibawah permukaan Jalan",
     };
-    onUpdate(updatedData);
+  
+    const updatedData = {
+      SHOULDER_CHANNEL_SIDE: {
+        LEFT_SHOULDER_SURFACE: PBahuMapping[Kiri],
+        RIGHT_SHOULDER_SURFACE: PBahuMapping[Kanan],
+      },
+    };
+    updateFormSurvey(data.id, updatedData);
   };
 
   return (

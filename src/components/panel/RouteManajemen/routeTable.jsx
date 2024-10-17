@@ -60,8 +60,8 @@ const RouteTable = ({ openAdd, openDetail, openDelete, openEdit, dataRute }) => 
         <tbody>
           {dataRute.length > 0 ? (
             dataRute.map((route, index) => (
-              <tr key={route.NO_RUAS} className="text-center">
-                <td className="py-2 border-r">{index + 1}</td>
+              <tr key={route.id} className="text-center">
+                <td className="py-2 border-r">{route.NO_RUAS}</td>
                 <td className="py-2 border-r">{route.NAMA_RUAS_JALAN}</td>
                 <td className="py-2 border-r">{route.KECAMATAN_YANG_DILALUI}</td>
                 <td className="p-2 border-r text-left">{route.KETERANGAN || "-"}</td>

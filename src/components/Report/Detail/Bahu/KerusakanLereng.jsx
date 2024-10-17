@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import checked from "../../../../assets/Checked.png";
 import unchecked from "../../../../assets/Unchecked.png";
 import arrow from "../../../../assets/button/arrow.png";
+import { updateFormSurvey } from "../../../../services/reportServices";
 
-export const KerusakanLereng = ({data, onTrotoar, onSaluran, onUpdate}) => {
+export const KerusakanLereng = ({data, onTrotoar, onSaluran}) => {
   const [Kiri, setKiri] = useState(1);
   const [Kanan, setKanan] = useState(1);
   const moreData = data.FORM_SURVEY;
@@ -22,11 +23,17 @@ export const KerusakanLereng = ({data, onTrotoar, onSaluran, onUpdate}) => {
   }, [moreData])
 
   const handleUpdate = () => {
-    const updatedData = {
-      LEFT_SHOULDER_CONDITION: Kiri,
-      RIGHT_SHOULDER_CONDITION: Kanan,
+    const KBahuMapping = {
+      1: "Tidak ada",
+      2: "Longsor/Runtuh",
     };
-    onUpdate(updatedData);
+    const updatedData = {
+      SHOULDER_CHANNEL_SIDE: {
+        LEFT_SHOULDER_CONDITION: KBahuMapping[Kiri],
+        RIGHT_SHOULDER_CONDITION: KBahuMapping[Kanan],
+      },
+    };
+    updateFormSurvey(data.id,updatedData);
   };
 
   return (

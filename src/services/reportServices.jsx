@@ -1,22 +1,42 @@
-import { serverApi } from "../api/axios";
+import { lokalApi } from "../api/axios";
 
-export const getImage = async (fileName) => {
-    try {
-      const response = await serverApi.get(`/ftv/image/${fileName}`, {
-        responseType: 'blob', // Mendapatkan response sebagai Blob untuk file biner
-      });
-  
-      if (response) {
-        // Membuat URL dari Blob untuk ditampilkan sebagai gambar
-        const imageURL = URL.createObjectURL(response.data);
-        return imageURL; // Mengembalikan URL gambar
-      } else {
-        console.error('Gagal mendapatkan gambar');
-        return null;
-      }
-    } catch (error) {
-      console.error(`Error fetching image for ${fileName}:`, error);
+
+export const updateDetailReport = async (id, formData) => {
+  try {
+    const response = await lokalApi.patch(
+      `final-report/update/${id}`,
+      formData
+    );
+    console.log("Response dari API:", response);
+
+    if (response.data.success) {
+      alert(response.data.message);
+    } else {
+      console.error(response.message);
       return null;
     }
-  };
-  
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mengupdate detail laporan", error);
+    return null;
+  }
+};
+export const updateFormSurvey = async (id, updatedData) => {
+  try {
+    const response = await lokalApi.patch(
+      `final-report/update/formSurvey/${id}`,
+      updatedData
+    );
+    console.log("Response dari API:", response);
+
+    if (response.data.success) {
+      alert(response.data.message);
+    } else {
+      console.error(response.message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mengupdate Form Survey", error);
+    return null;
+  }
+};
+

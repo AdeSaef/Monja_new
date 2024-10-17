@@ -1,18 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
+import LeafletMap from "./addMap";
 
 const EditRute = ({ routeDetail, closeEdit }) => {
-  if (!routeDetail) return null; // Jangan tampilkan apa pun jika routeDetail tidak ada
+  // Jangan tampilkan apa pun jika routeDetail tidak ada
+  if (!routeDetail) return null;
 
-  // Lakukan destrukturisasi langsung dari routeDetail dan set initial state
+  // State untuk formData, diisi dengan data dari routeDetail
   const [formData, setFormData] = useState({
-    noRuas: routeDetail.NO_RUAS,
-    guid: routeDetail.GUID,
-    namaRuasJalan: routeDetail.NAMA_RUAS_JALAN,
-    kecamatanYangDilalui: routeDetail.KECAMATAN_YANG_DILALUI,
-    keterangan: routeDetail.KETERANGAN,
-    ruas: "ruas(jarak) tidak ada", // Contoh statis
+    no_ruas: "",
+    guid: "",
+    ruas: [],
+    nama_ruas_jalan: "",
+    kecamatan_yang_dilalui: "",
+    keterangan: "",
   });
+
+  // Gunakan useEffect untuk mengisi formData saat routeDetail berubah
+  useEffect(() => {
+    if (routeDetail) {
+      setFormData({
+        no_ruas: routeDetail.NO_RUAS || "",
+        guid: routeDetail.GUID || "",
+        ruas: routeDetail.RUAS || [], // Pastikan ruas diisi dengan array kosong jika tidak ada data
+        nama_ruas_jalan: routeDetail.NAMA_RUAS_JALAN || "",
+        kecamatan_yang_dilalui: routeDetail.KECAMATAN_YANG_DILALUI || "",
+        keterangan: routeDetail.KETERANGAN || "",
+      });
+    }
+  }, [routeDetail]);
 
   // Fungsi untuk menangani perubahan input
   const handleChange = (e) => {
@@ -23,13 +39,20 @@ const EditRute = ({ routeDetail, closeEdit }) => {
     }));
   };
 
+  // Fungsi untuk menambahkan posisi ke dalam ruas (digunakan oleh LeafletMap)
+  const handleAddPosition = (newPosition) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ruas: [...prevData.ruas, newPosition],
+    }));
+  };
+
   // Fungsi untuk menangani submit form
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logika untuk submit data, misalnya kirim ke API
     console.log("Data yang dikirim:", formData);
-    // Setelah submit, bisa tambahkan logika untuk close form
-    closeEdit();
+    // Logika untuk mengirim data bisa ditambahkan di sini
+    // closeEdit(); // Jika ingin menutup form setelah submit
   };
 
   return (
@@ -38,7 +61,7 @@ const EditRute = ({ routeDetail, closeEdit }) => {
       onClick={closeEdit}
     >
       <div
-        className="w-1/2 border-8 border-stone-600 rounded-3xl bg-white p-12 relative"
+        className="w-3/4 h-3/4 border-8 border-stone-600 rounded-3xl bg-white p-12 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-4">
@@ -53,25 +76,32 @@ const EditRute = ({ routeDetail, closeEdit }) => {
         <div className="flex w-full h-full">
           <form className="mt-4 w-full mr-2" onSubmit={handleSubmit}>
             {[
-              { field: "noRuas", label: "No. Ruas", value: formData.noRuas },
+              { field: "no_ruas", label: "No. Ruas", value: formData.no_ruas },
               { field: "guid", label: "GUID", value: formData.guid },
-              { field: "namaRuasJalan", label: "Nama Ruas Jalan", value: formData.namaRuasJalan },
-              { field: "ruas", label: "Ruas", value: formData.ruas },
               {
-                field: "kecamatanYangDilalui",
-                label: "Kecamatan yang Dilalui",
-                value: formData.kecamatanYangDilalui,
+                field: "nama_ruas_jalan",
+                label: "Nama Ruas Jalan",
+                value: formData.nama_ruas_jalan,
               },
-              { field: "keterangan", label: "Keterangan", value: formData.keterangan },
+              {
+                field: "kecamatan_yang_dilalui",
+                label: "Kecamatan yang Dilalui",
+                value: formData.kecamatan_yang_dilalui,
+              },
+              {
+                field: "keterangan",
+                label: "Keterangan",
+                value: formData.keterangan,
+              },
             ].map(({ field, label, value }) => (
               <div className="flex flex-col mb-2 pr-2" key={field}>
                 <label className="mx-1 text-xs">{label}</label>
                 <input
                   type="text"
-                  className="rounded-md border w-full p-1 bg-white" // Ubah warna background ke putih untuk menandakan bisa diedit
+                  className="rounded-md border w-full p-1 bg-white"
                   name={field}
                   value={value}
-                  onChange={handleChange} // Tambahkan onChange untuk membuat input editable
+                  onChange={handleChange}
                 />
               </div>
             ))}
@@ -82,6 +112,13 @@ const EditRute = ({ routeDetail, closeEdit }) => {
               Submit
             </button>
           </form>
+          <div className="w-full h-full overflow-clip ml-4">
+            <LeafletMap
+              onAddPosition={handleAddPosition}
+              coord={formData.ruas}
+              editable={true}
+            />
+          </div>
         </div>
       </div>
     </div>
