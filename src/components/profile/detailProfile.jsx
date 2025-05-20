@@ -111,7 +111,7 @@ const DetailProfile = ({
 
   return (
     <div
-      className={`w-screen h-screen z-50 absolute top-0 left-0 flex items-center justify-center bg-black bg-opacity-75 transition-opacity duration-500 ${
+      className={`w-screen h-screen z-50 fixed top-0 left-0 flex items-center justify-center bg-black bg-opacity-75 transition-opacity duration-500 ${
         isDetailProfile ? "opacity-100" : "opacity-0 hidden"
       }`}
     >

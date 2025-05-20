@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const LeafletMap = ({ onAddPosition, coord, editable }) => {
+const LeafletMap = ({ onAddPosition, coord, editable, addMode }) => {
   const [positions, setPositions] = useState([]); // Menyimpan koordinat pin
-  const [mapCenter, setMapCenter] = useState([-7.2147, 107.8997]); // Default center jika coord kosong
+  const [mapCenter, setMapCenter] = useState(null); // Default null agar tidak merender map sebelum coord tersedia
 
   // Fungsi untuk menambahkan pin
   const addMarker = (e) => {
@@ -25,18 +25,25 @@ const LeafletMap = ({ onAddPosition, coord, editable }) => {
 
   // Set positions dan map center berdasarkan data dari coord
   useEffect(() => {
+    if (addMode) {
+      // Jika addMode aktif, set map center ke Garut
+      setMapCenter([-7.2052, 107.9087]);
+      return; // Lewati validasi coord
+    }
+
     if (coord && coord.length > 0) {
       const newPositions = coord.map(({ lat, long }) => [lat, long]);
       setPositions(newPositions); // Update state positions dengan koordinat dari prop coord
 
-      // Menghitung center peta berdasarkan nilai rata-rata dari latitude dan longitude
-      const avgLat =
-        newPositions.reduce((acc, pos) => acc + pos[0], 0) / newPositions.length;
-      const avgLong =
-        newPositions.reduce((acc, pos) => acc + pos[1], 0) / newPositions.length;
-      setMapCenter([avgLat, avgLong]); // Set map center ke nilai rata-rata
+      // Set map center ke koordinat pertama
+      setMapCenter([coord[0].lat, coord[0].long]);
     }
-  }, [coord]); // Akan dipanggil ulang setiap kali coord berubah
+  }, [coord, addMode]); // Akan dipanggil ulang setiap kali coord atau addMode berubah
+
+  // Tampilkan pesan loading jika mapCenter belum diatur (kecuali addMode aktif)
+  if (!mapCenter) {
+    return <p>Loading map...</p>;
+  }
 
   return (
     <MapContainer

@@ -61,7 +61,7 @@ const DetailRute = ({ routeDetail, closeDetail }) => {
             ))}
           </div>
           <div className="w-full">
-            <LeafletMap coord={ruas} editable={false}/>
+            <LeafletMap coord={ruas} editable={false} addMode={false}/>
           </div>
         </div>
       </div>

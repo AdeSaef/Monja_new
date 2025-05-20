@@ -1,12 +1,16 @@
-import { serverApi } from "../api/axios";
+import { lokalApi } from "../api/axios";
 
-
-export const getRuteData = async (page) => { 
+export const getRuteData = async (page) => {
   try {
-    const ruteData = await serverApi.get(`/rute/get?page=${page ? page : 1}&keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
+    const ruteData = await lokalApi.get(
+      `/rute/get?page=${
+        page ? page : 1
+      }&keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`
+    );
     // console.log(ruteData.data)
-    
-    if (ruteData.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
+
+    if (ruteData.data.success) {
+      // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
       return {
         data: ruteData.data, // Data rute
         page: page, // Halaman saat ini
@@ -20,11 +24,12 @@ export const getRuteData = async (page) => {
     return null;
   }
 };
-export const getRuteName = async () => { 
+export const getRuteName = async () => {
   try {
-    const ruteData = await serverApi.get(`/rute/get/company?keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`);
-    
-    if (ruteData.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
+    const ruteData = await lokalApi.get(
+      `/rute/get/company?keyword=383c0103-76a6-4c12-bd84-499d4f8e2579`
+    );
+    if (ruteData.data.success) {
       return ruteData.data; // Data rute;
     } else {
       console.error(ruteData.data.message);
@@ -36,12 +41,11 @@ export const getRuteName = async () => {
   }
 };
 
-export const getRuteDetail = async (guid) => { 
+export const getRuteDetail = async (guid) => {
   try {
-    const ruteDetail = await serverApi.get(`/rute/get/guid/${guid}`);
-    console.log(ruteDetail.data.data);
-    
-    if (ruteDetail.data.success) { // Perbaiki typo dari 'succes' menjadi 'success' jika perlu
+    const ruteDetail = await lokalApi.get(`/rute/get/guid/${guid}`);
+
+    if (ruteDetail.data.success) {
       return ruteDetail.data.data;
     } else {
       console.error(ruteDetail.data.message);
@@ -53,63 +57,79 @@ export const getRuteDetail = async (guid) => {
   }
 };
 
-
-export const getRutebyId =async (ID)=>{ 
-    try{
-    const ruteDetail = await serverApi.get(`/rute/get/guid/${ID}`)
-    console.log (ruteDetail)
-    if  (ruteDetail.data.success) { //-1 's'
-        return ruteDetail.data.data;
-      } else {
-        console.error (ruteDetail.data.message);
-        return null;
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan saat mendapatkan data survey", error);
+export const getRutebyId = async (ID) => {
+  try {
+    const ruteDetail = await lokalApi.get(`/rute/get/guid/${ID}`);
+    console.log(ruteDetail);
+    if (ruteDetail.data.success) {
+      return ruteDetail.data.data;
+    } else {
+      console.error(ruteDetail.data.message);
       return null;
     }
-}
-export const getKoordinatReport =async (rute,tgl)=>{ 
-    try{
-    const rutekoordinat = await serverApi.get(`final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`)
-    if  (rutekoordinat.data.success) { 
-        return rutekoordinat.data.data;
-      } else {
-        console.error (rutekoordinat.data.message);
-        return null;
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan saat mendapatkan data survey", error);
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mendapatkan data rute", error);
+    return null;
+  }
+};
+export const getKoordinatReport = async (rute, tgl) => {
+  try {
+    const rutekoordinat = await lokalApi.get(
+      `final-report/get/kordinate/?guid_rute=${rute}&tanggal_survey=${tgl}`
+    );
+    if (rutekoordinat.data.success) {
+      // console.table(rutekoordinat.data.data);
+      return rutekoordinat.data.data;
+    } else {
+      console.error(rutekoordinat.data.message);
       return null;
     }
-}
-export const deleteRutebyGuid =async (guid)=>{ 
-    try{
-    const deleteRute = await serverApi.delete(`/rute/delete/guid/${guid}`)
-    console.log (deleteRute)
-    if  (deleteRute.data.success) {
-        return deleteRute.data.message;
-      } else {
-        console.error (deleteRute.data.message);
-        return null;
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan saat mendapatkan data survey", error);
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mendapatkan data survey", error);
+    return null;
+  }
+};
+export const deleteRutebyGuid = async (guid) => {
+  try {
+    const deleteRute = await lokalApi.delete(`/rute/delete/guid/${guid}`);
+    console.log(deleteRute);
+    if (deleteRute.data.success) {
+      return deleteRute.data.message;
+    } else {
+      console.error(deleteRute.data.message);
       return null;
     }
-}
-export const CreateRute =async (formData)=>{ 
-    try{
-    const createRute = await serverApi.post(`/rute/app`,formData)
-    console.log (createRute)
-    if  (createRute.data.success) {
-        return createRute.data.message;
-      } else {
-        console.error (createRute.data.message);
-        return null;
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan saat mendapatkan data survey", error);
+  } catch (error) {
+    console.error("Terjadi kesalahan saat menghapus rute", error);
+    return null;
+  }
+};
+export const CreateRute = async (formData) => {
+  try {
+    const createRute = await lokalApi.post(`/rute/app`, formData);
+    console.log(createRute);
+    if (createRute.data.success) {
+      return createRute.data.message;
+    } else {
+      console.error(createRute.data.message);
       return null;
     }
-}
+  } catch (error) {
+    console.error("Terjadi kesalahan saat membuat rute", error);
+    return null;
+  }
+};
+export const SubmitEditRute = async (formData, id) => {
+  try {
+    const editRute = await lokalApi.patch(`/rute/update/${id}`, formData);
+    if (editRute.data.success) {
+      return editRute.data;
+    } else {
+      console.error(editRute.data.message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan.", error.response.data.message);
+    return null;
+  }
+};

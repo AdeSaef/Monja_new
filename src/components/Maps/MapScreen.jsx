@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap } from "react-leaflet";
-import L from 'leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  ZoomControl,
+  useMap,
+} from "react-leaflet";
+import L from "leaflet";
 import { getDetailSurvey } from "../../services/surveyService";
-
 
 const UpdateMapView = ({ center, zoom }) => {
   const map = useMap(); // Dapatkan referensi ke instance peta
@@ -16,7 +22,7 @@ const UpdateMapView = ({ center, zoom }) => {
 
 const getPinColor = (status) => {
   switch (status) {
-    case 'A':
+    case "A":
       return `
         <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -26,7 +32,7 @@ const getPinColor = (status) => {
           </g>
         </svg>
       `;
-    case 'B':
+    case "B":
       return `
         <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -36,7 +42,7 @@ const getPinColor = (status) => {
           </g>
         </svg>
       `;
-    case 'C':
+    case "C":
       return `
         <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -46,7 +52,7 @@ const getPinColor = (status) => {
           </g>
         </svg>
       `;
-    case 'D':
+    case "D":
       return `
         <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -83,10 +89,10 @@ const MapScreen = ({ hide, koordinat, allData, pinClickHandle }) => {
 
   const extractCoordinates = () => {
     if (Array.isArray(allData)) {
-      return allData.map(item => ({
+      return allData.map((item) => ({
         position: item.coordinate,
         status: item.status_jalan,
-        id: item._id
+        id: item._id ? item._id : item.id,
       }));
     }
     return [];
@@ -98,19 +104,17 @@ const MapScreen = ({ hide, koordinat, allData, pinClickHandle }) => {
 
   return (
     <div
-      className="absolute top-0 h-screen text-6xl text-white text-center select-none z-0"
+      className="h-screen w-full text-6xl text-white text-center select-none z-10"
       onClick={hide}
     >
-      <div style={{ height: "100vh", width: "100vw" }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <MapContainer
           center={initialCenter}
           zoom={initialZoom}
-          style={{ height: "100%", width: "100%" }}
+          style={{ height: "100%", width: "100%", zIndex: 10 }}
           zoomControl={false}
         >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <UpdateMapView center={initialCenter} zoom={initialZoom} />
           {coordinatesWithStatus.length > 0 ? (
             coordinatesWithStatus.map((data, index) => (
@@ -118,7 +122,7 @@ const MapScreen = ({ hide, koordinat, allData, pinClickHandle }) => {
                 key={index}
                 position={data.position}
                 icon={L.divIcon({
-                  className: 'custom-icon',
+                  className: "custom-icon",
                   html: `
                     <div style="
                       display: flex;
@@ -142,15 +146,25 @@ const MapScreen = ({ hide, koordinat, allData, pinClickHandle }) => {
               >
                 <Popup>
                   <div>
-                    <strong>Latitude:</strong> {data.position[0]}<br />
-                    <strong>Longitude:</strong> {data.position[1]}<br />
+                    <strong>Latitude:</strong> {data.position[0]}
+                    <br />
+                    <strong>Longitude:</strong> {data.position[1]}
+                    <br />
                     <strong>Status:</strong> {data.status}
                   </div>
                 </Popup>
               </Marker>
             ))
           ) : (
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", color: "white" }}>
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                color: "white",
+              }}
+            >
               No data available
             </div>
           )}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./button";
 import { userApi } from "../../api/axios";
+import bgimage from "../../assets/Background.png";
+import logoMonja from "../../assets/logo/logo_monja.png";
 
 function FormRegister() {
   const [formData, setFormData] = useState({
@@ -75,91 +77,109 @@ function FormRegister() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="m-4">
-      <p>Instansi</p>
-      <div className="border-2 border-black rounded-lg overflow-hidden h-10 py-auto mb-2">
-        <select
-          className="form-select w-full h-full p-2"
-          name="companyGuild"
-          value={formData.companyGuild}
-          onChange={handleChange}
+    <div className="bg-white flex justify-center">
+      <img src={bgimage} className="fixed top-0 left-0 w-screen h-screen object-cover opacity-25" />
+      <div className="flex select-none h-screen items-center">
+        <div
+          className={`container non-interactive min-w-64 sm:w-72 md:w-80 lg:w-96 w-max-2xl flex flex-col relative select-none`}
         >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          <div className="flex justify-center w-full">
+            <div className={`w-28 h-full `}>
+              <img
+                src={logoMonja}
+                alt="Logo Monja"
+                className="pointer-events-none"
+              />
+            </div>
+          </div>
+          <form onSubmit={handleSubmit} className="m-4 mt-0">
+            <p>Instansi</p>
+            <div className="border-2 border-black rounded-lg overflow-hidden h-10 py-auto mb-2">
+              <select
+                className="form-select w-full h-full p-2"
+                name="companyGuild"
+                value={formData.companyGuild}
+                onChange={handleChange}
+              >
+                {options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-2">
+              <label htmlFor="name" className="block text-sm mb-0">
+                Masukkan Nama
+              </label>
+              <input
+                type="text"
+                className="flex h-full w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="phoneNumber" className="block text-sm mb-0">
+                Masukkan No HP
+              </label>
+              <input
+                type="text"
+                className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="email" className="block text-sm mb-0">
+                Masukkan Email
+              </label>
+              <input
+                type="email"
+                className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="password" className="block text-sm mb-0">
+                Masukkan Password
+              </label>
+              <input
+                type="password"
+                className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm mb-0">
+                Konfirmasi Password
+              </label>
+              <input
+                type="password"
+                className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
+                id="confirmPassword"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex items-end mt-0 justify-end">
+              <Button textBtn="Daftar" w="auto" px={8} />
+            </div>
+          </form>
+        </div>
       </div>
-      <div className="mb-2">
-        <label htmlFor="name" className="block text-sm mb-0">
-          Masukkan Nama
-        </label>
-        <input
-          type="text"
-          className="flex h-full w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-2">
-        <label htmlFor="phoneNumber" className="block text-sm mb-0">
-          Masukkan No HP
-        </label>
-        <input
-          type="text"
-          className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
-          id="phoneNumber"
-          name="phoneNumber"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-2">
-        <label htmlFor="email" className="block text-sm mb-0">
-          Masukkan Email
-        </label>
-        <input
-          type="email"
-          className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-2">
-        <label htmlFor="password" className="block text-sm mb-0">
-          Masukkan Password
-        </label>
-        <input
-          type="password"
-          className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-2">
-        <label htmlFor="confirmPassword" className="block text-sm mb-0">
-          Konfirmasi Password
-        </label>
-        <input
-          type="password"
-          className="flex h-10 w-full p-2 rounded-lg border-2 border-black items-center md:h-10 lg:h-10 "
-          id="confirmPassword"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="flex items-end mt-0 justify-end">
-        <Button textBtn="Daftar" w="auto" px={8} />
-      </div>
-    </form>
+    </div>
   );
 }
 

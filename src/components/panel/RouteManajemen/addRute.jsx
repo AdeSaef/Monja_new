@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import LeafletMap from "./addMap";
-import { lokalApi, serverApi } from "../../../api/axios";
+import { lokalApi } from "../../../api/axios";
 
 const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
   const [formData, setFormData] = useState({
@@ -9,7 +9,7 @@ const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
     NAMA_RUAS_JALAN: "",
     RUAS: [],
     KECAMATAN_YANG_DILALUI: "",
-    KETERANGAN: [""], // Mulai dengan satu elemen di array
+    KETERANGAN: [""],
     COMPANY: "383c0103-76a6-4c12-bd84-499d4f8e2579",
   });
 
@@ -40,7 +40,7 @@ const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
     e.preventDefault();
     console.log(formData);
     try {
-      const response = await serverApi.post("/rute/add", formData);
+      const response = await lokalApi.post("/rute/add", formData);
 
       if (response.data.success) {
         alert(response.data.message);
@@ -59,7 +59,6 @@ const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-70 z-50"
-      onClick={closeAdd}
     >
       <div
         className="w-1/2 border-8 border-stone-600 rounded-3xl bg-white p-12 relative"
@@ -118,7 +117,7 @@ const TambahRute = ({ closeAdd, setDataRute, fetchRute, currentPage }) => {
           <div className="w-full h-auto flex justify-center">
             <div className="ml-4 mr-0 h-full w-full">
               <div>
-                <LeafletMap onAddPosition={handleAddPosition} editable={true}/>
+                <LeafletMap onAddPosition={handleAddPosition} editable={true} addMode={true}/>
               </div>
             </div>
           </div>

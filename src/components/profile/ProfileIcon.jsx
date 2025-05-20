@@ -17,11 +17,9 @@ const ProfileIcon = ({
 
   return (
     <div
-      className={`w-auto h-auto absolute top-10 left-10 flex transition-opacity duration-500 ${
-        isProfile ? "opacity-100" : "opacity-0"
-      }`}
+      className={`w-auto h-auto flex`}
     >
-      <div className="w-24 h-24 p-0 rounded-full border-4 border-black overflow-hidden select-none">
+      <div className="w-16 h-16 rounded-full border-2 border-black overflow-hidden select-none">
         <img
           src={imageProfile}
           alt="Profile"
@@ -36,12 +34,12 @@ const ProfileIcon = ({
             onClick={toggleEditProfile}
           />
         </div>
-        <div className="w-6 h-6 rounded-full bg-black object-contain cursor-pointer">
+        {/* <div className="w-6 h-6 rounded-full bg-black object-contain cursor-pointer">
           <IoIosSettings
             className="text-white w-full h-full"
             onClick={toggleSetting}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

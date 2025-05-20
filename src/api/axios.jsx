@@ -10,13 +10,17 @@ export const serverApi = axios.create({
 });
 
 // api lokal
+// export const lokalApi = axios.create({
+//     baseURL: 'http://192.168.10.35:5092/',
+// });
+
 export const lokalApi = axios.create({
-    baseURL: 'http://192.168.10.194:5092/',
+    baseURL: 'http://localhost:5092/',
 });
 
-// export const lokalApi = axios.create({
-//     baseURL: 'http://localhost:5092/',
-// });
+export const urlImageApi = 'http://ftp-monja.pptik.id/result';
+// export const urlLokalApi = 'http://192.168.10.35:5092/';
+export const urlLokalApi = 'http://localhost:5092/';
 
 //guid Application
 export const guidAplication = "PROJECT-dd872261-8665-4b22-b052-9ba09053ce73-2024";

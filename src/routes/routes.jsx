@@ -9,12 +9,13 @@ import Berhasil from "../components/login/done.jsx";
 import HomePage from "../pages/homePage.jsx";
 import NewPassword from "../components/login/new_password.jsx";
 import ForgotPassword from "../components/login/forgotPassword.jsx";
-import ManajemenSurvey from "../components/panel/SurveyManajemen/manajemenSurvey.jsx";
+import ManajemenSurvey from "../components/panel/SurveyManajemen/ManajemenSurvey.jsx";
 import ManajemenRoute from "../components/panel/RouteManajemen/manajemenRoute.jsx";
 import DataSurvey from "../components/Survey/DataSurvey/DataSurvey.jsx";
 import KurasiSurvey from "../components/Survey/kurasiSurvey/KurasiSurvey.jsx";
 import DetailKurasiSurvey from "../components/Survey/kurasiSurvey/DetailKurasiSurvey.jsx";
 import MoreDetailReport from "../components/Report/DetailReport.jsx";
+import UploadVideo from "../pages/UploadVideo.jsx";
 // import FileList from "../api/test.jsx";
 // import ImageComponent from "../api/test.jsx";
 
@@ -24,15 +25,22 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<AuthPage mode={<FormLogin />} wlogo={<Logo />}/>} />
-        <Route path="/register" element={<AuthPage mode={<FormRegister/>} ssize="my-10 px-0 pt-0"/>} />
+        {/* <Route path="/login" element={<AuthPage mode={<FormLogin />} wlogo={<Logo />}/>} /> */}
+        <Route path="/login" element={<FormLogin/>} />
+        {/* <Route path="/register" element={<AuthPage mode={<FormRegister/>} ssize="my-10 px-0 pt-0"/>} /> */}
+        <Route path="/register" element={<FormRegister/>} />
         <Route path="/forgot-password" element={<AuthPage mode={<ForgotPassword />} lsize="mr-0 w-12 sm:w-10 md:w-12 lg:w-16"/>} /> 
         <Route path="/new-password" element={<AuthPage mode={<NewPassword />} lsize="mr-0 w-12 sm:w-10 md:w-12 lg:w-16"/>} /> 
         <Route path="/activation" element={<AuthPage mode={<Activation />} lsize="mr-0 w-12 sm:w-10 md:w-12 lg:w-16"/>} /> 
         <Route path="/berhasil" element={<AuthPage mode={<Berhasil />} lsize="m-3 my-0 w-12 sm:w-10 md:w-12 lg:w-16" ssize="h-[calc(100vh-5rem)] my-10 px-0"/>} /> 
-        <Route path="/survey" element={< ManajemenSurvey />} />
-        <Route path="/route" element={< ManajemenRoute />} />
+        {/* <Route path="/survey" element={< ManajemenSurvey />} />*/}
+        <Route path="/uploader" element={< UploadVideo />} /> 
         <Route path="/" element={<HomePage />} />
+        <Route path="/survey" element={<HomePage />} />
+        <Route path="/kurasi" element={<HomePage />} />
+        <Route path="/detailKurasi" element={<HomePage  mode="detailKurasi"/>} />
+        <Route path="/dataSurvey" element={<HomePage />} />
+        <Route path="/rute" element={<HomePage />} />
         {/* <Route path="/test" element={<MoreDetailReport />} /> */}
         {/* <Route path="/file" element={<FileList fileName="GX010359.MP4_0-02-06.00.jpg"/>} /> */}
       </Routes>

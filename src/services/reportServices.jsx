@@ -40,3 +40,19 @@ export const updateFormSurvey = async (id, updatedData) => {
   }
 };
 
+export const koordinatRuteGuid = async (guid) =>{
+  try {
+    const response = await lokalApi.get(`/final-report/kordinate/${guid}`);
+    // console.table(response.data.data);
+    if (response.data.success) {
+      return response.data.data;
+    } else {
+      console.error(response.message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mengupdate Form Survey", error);
+    return null;
+  }
+}
+

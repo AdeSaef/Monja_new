@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import { useHomePageLogic } from "../../../services/homepage";
 import { Validation } from "../../../services/verifikasi_data";
+import { Navigate } from "react-router-dom";
 import Panel from "../PanelBtn";
 import RouteTable from "./routeTable";
 import TambahRute from "./addRute";
 import DetailRute from "./detailRute";
 import EditRute from "./editRute";
 import DeleteRute from "./deleteRute";
-import navigation from "../../../assets/button/navigation.png";
+import Fuse from "fuse.js";
 import {
   getRuteData,
   getRuteDetail,
   deleteRutebyGuid,
+  getRuteName,
 } from "../../../services/ruteService";
 
 const ManajemenRoute = () => {
   if (!Validation()) {
     return <Navigate to="/login" />;
   }
+
   const {
     mapsOpen,
     ismapsOpen,
@@ -36,23 +39,16 @@ const ManajemenRoute = () => {
   const [detailRuteData, setDetailRute] = useState({});
   const [guidSelected, setGuid] = useState("");
   const [Deleterute, setDelete] = useState(false);
-  const [currentPage, setCurrentPage] = useState(34);
-  const [totalPages, setTotalPages] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPages] = useState(10);
 
-  const closeAdd = () => {
-    setAddrute(false);
-  };
-
-  const openAdd = () => {
-    setAddrute(true);
-  };
-
-  const closeDetail = () => {
-    setDetailrute(false);
-  };
-
-  const closeEdit = () => {
-    setEditrute(false);
+  const closeAdd = () => setAddrute(false);
+  const openAdd = () => setAddrute(true);
+  const closeDetail = () => setDetailrute(false);
+  const closeEdit = () => setEditrute(false);
+  const closeDelete = () => {
+    setGuid("");
+    setDelete(false);
   };
 
   const openDetail = (guid) => {
@@ -61,7 +57,6 @@ const ManajemenRoute = () => {
   };
 
   const openDelete = (guid) => {
-    console.log("delete select :", guid);
     setGuid(guid);
     setDelete(true);
   };
@@ -69,31 +64,31 @@ const ManajemenRoute = () => {
   const confirmDelete = () => {
     deleteRute(guidSelected);
     setGuid("");
-    setDataRute([]);
     fetchRute(currentPage);
     setDelete(false);
   };
 
-  const closeDelete = () => {
-    setGuid("");
-    setDelete(false);
-  };
-
   const openEdit = (guid) => {
-    console.log("guid edit :", guid);
     detailRute(guid);
     setEditrute(true);
-  };
-  const handleSave = (formData) => {
-    console.log("saved : ", formData);
   };
 
   const fetchRute = async (page) => {
     try {
       const result = await getRuteData(page);
-
+      // console.table(result.data.data)
       if (result) {
-        setDataRute(result.data.data || []);
+        const newData = result.data.data || [];
+        setDataRute((prevData) => {
+          // Gabungkan data baru dengan data sebelumnya
+          const combinedData = [...prevData, ...newData];
+          // Hilangkan data duplikat berdasarkan atribut unik, misalnya `guid`
+          const uniqueData = combinedData.filter(
+            (value, index, self) =>
+              index === self.findIndex((item) => item.GUID === value.GUID)
+          );
+          return uniqueData;
+        });
         setCurrentPage(result.data.page || 1);
         setTotalPages(result.data.totalPage || 1);
       }
@@ -101,29 +96,27 @@ const ManajemenRoute = () => {
       console.error("Error fetching rute data:", error);
     }
   };
+  
+
 
   const detailRute = async (guid) => {
     try {
       const result = await getRuteDetail(guid);
-
-      if (result) {
-        setDetailRute(result); // Menyimpan data rute ke state
-        console.log("Data rute detail yang diterima:", result);
-      }
+      if (result) setDetailRute(result);
     } catch (error) {
       console.error("Error fetching rute data:", error);
     }
   };
+
   const deleteRute = async (guid) => {
     try {
       const result = await deleteRutebyGuid(guid);
-
       if (result) {
         alert("Rute berhasil dihapus");
-        window.location.reload(true);
+        fetchRute(currentPage);
       }
     } catch (error) {
-      console.error("Error fetching rute data:", error);
+      console.error("Error deleting rute:", error);
     }
   };
 
@@ -133,63 +126,30 @@ const ManajemenRoute = () => {
     fetchRute(currentPage);
   }, [setmapsOpen, setrouteOpen, currentPage]);
 
-  const backPage = () => {
-    if (currentPage > 1) {
-      fetchRute(currentPage - 1);
-    }
-  };
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      fetchRute(currentPage + 1);
-    }
-  };
+  // scroll pagination
+  const handleScrollEnd =()=>{
+    fetchRute(currentPage+1);
+  }
 
   return (
-    <div className="bg-stone-500 h-auto w-screen">
+    <div className="h-screen pb-20 w-full">
+      <div className="w-full h-3 bg-gray-200 select-none"></div>
       <div>
-        <p className="text-5xl pt-16 mx-4 mb-2 text-white select-none pointer-events-none">
-          MANAJEMEN ROUTE
+        <p className="text-xs mx-4 mb-2 select-none pointer-events-none">
+          Dashboard&gt;Manajemen Rute
         </p>
       </div>
-      <div className="bg-white h-auto px-20 py-3 select-none">
+      <div className="mt-16 h-full pl-4 pr-0 py-3 select-none">
         <RouteTable
           openAdd={openAdd}
           openDetail={openDetail}
           openEdit={openEdit}
           openDelete={openDelete}
           dataRute={dataRute}
+          onScrollEnd={handleScrollEnd}
         />
-        <div className="flex justify-end my-5">
-          <div
-            className={`flex flex-col justify-center ${
-              currentPage === 1 ? "hidden" : ""
-            }`}
-          >
-            <img
-              src={navigation}
-              className="transform rotate-180 h-5 w-8 cursor-pointer"
-              onClick={backPage}
-            />
-          </div>
-          <div className="w-6 border border-gray-300 rounded-xl mx-2 text-center py-1">
-            {currentPage}
-          </div>
-          <div
-            className={`flex flex-col justify-center ${
-              currentPage >= totalPages ? "hidden" : ""
-            }`}
-          >
-            <img
-              src={navigation}
-              className="h-5 w-8 cursor-pointer"
-              onClick={nextPage}
-              alt="Next Page"
-            />
-          </div>
-        </div>
       </div>
-      {Addrute && <TambahRute closeAdd={closeAdd} fetchRute={fetchRute} setDataRute={setDataRute} currentPage={currentPage}/>}
+      {Addrute && <TambahRute closeAdd={closeAdd} fetchRute={fetchRute} setDataRute={setDataRute}/>}
       {Detailrute && (
         <DetailRute routeDetail={detailRuteData} closeDetail={closeDetail} />
       )}
@@ -199,21 +159,6 @@ const ManajemenRoute = () => {
       {Deleterute && (
         <DeleteRute confirmDelete={confirmDelete} closeDelete={closeDelete} />
       )}
-      <div className="w-1/3 absolute top-1 right-0 z-10">
-        <div className="flex h-8">
-          <div className="w-1/12 mx-1 select-none"></div>
-          <div className="px-1 w-full h-auto z-50">
-            <Panel
-              mapsOpen={mapsOpen}
-              ismapsOpen={ismapsOpen}
-              surveyOpen={surveyOpen}
-              issurveyOpen={issurveyOpen}
-              routeOpen={routeOpen}
-              isrouteOpen={isrouteOpen}
-            />
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { urlImageApi } from "../../api/axios";
 
 const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
   // const [imageURL, setImageSrc] = useState(null);
@@ -9,7 +10,7 @@ const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-2/5 bg-gray-200 z-50 overflow-y-scroll scrollbar-thin">
+    <div className="absolute top-0 left-0 h-screen pb-20 w-2/5 bg-gray-200 z-50 overflow-y-scroll scrollbar-thin">
       <div className="w-full h-auto mb-4 relative">
         <div
           className="w-6 h-auto bg-red-700 absolute top-0 right-0 text-center text-lg cursor-pointer select-none"
@@ -24,7 +25,7 @@ const DetailReport = ({ data, closeDetailReport, MoreDetailOpen }) => {
         <div className="w-full h-full min-h-40 bg-white m-auto text-center">
           {data.namafile ? (
             <img
-              src={`https://monitoring.pptik.id/data/road_coba/gambar/${data.namafile}`}
+              src={`${urlImageApi}/${data.namafile}`}
               alt={data.namafile}
               className="w-full h-auto"
             />

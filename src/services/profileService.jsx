@@ -9,7 +9,7 @@ const config = userToken
 export const getProfile = async () => {
   try {
     const response = await userApi.get("/users/profile", config);
-
+    // console.log(response);
     if (response.data.success) {
       return response.data.data;
     } else {
@@ -50,7 +50,7 @@ export const updatePassword = async (formData) => {
 export const updateProfile = async (formData) => {
   try {
     const response = await userApi.post("/users/edit-profile", formData, config);
-    return response.message;
+    return response;
   } catch (error) {
     console.error(error);
     throw error;
